@@ -2,21 +2,21 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Activity;
+use App\Models\SuratMasuk;
 use Exception;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 
-class ActivityController extends Controller
+class SuratMasukController extends Controller
 {
     /**
      * Display a listing of the resource.
      */
     public function index()
     {
-        $activities = Activity::all();
-        return view('activity.index', [
-            'activities' => $activities,
+        $getAll = SuratMasuk::all();
+        return view('suratmasuk.index', [
+            'suratMasuk' => $getAll,
         ]);
     }
 
@@ -25,7 +25,7 @@ class ActivityController extends Controller
      */
     public function create()
     {
-        return view('activity.create');
+        return view('suratmasuk.create');
     }
 
     /**
@@ -34,15 +34,18 @@ class ActivityController extends Controller
     public function store(Request $request)
     {
         DB::beginTransaction();
+
         try {
-            $activity = new Activity();
-            $activity->name = $request->name;
-            $activity->description = $request->description;
-            $activity->date = $request->date;
-            $activity->save();
+            $suratmasukI = new SuratMasuk();
+            $suratmasukI->tanggal = $request->tanggal;
+            $suratmasukI->no_surat = $request->no_surat;
+            $suratmasukI->asal_surat = $request->asal_surat;
+            $suratmasukI->keterangan = $request->keterangan;
+            $suratmasukI->dokumen = $request->dokumen;
+            $suratmasukI->save();
 
             DB::commit();
-            return redirect('/activity')->with(
+            return redirect('/suratmasuk')->with(
                 'status',
                 'Data berhasil ditambahkan'
             );
@@ -62,9 +65,13 @@ class ActivityController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(Activity $activity)
+    public function show($id)
     {
-        //
+        $getData = SuratMasuk::findOrFail($id);
+
+        return view('suratmasuk.show', [
+            'suratmasuk' => $getData,
+        ]);
     }
 
     /**
@@ -72,9 +79,9 @@ class ActivityController extends Controller
      */
     public function edit($id)
     {
-        $activities = Activity::findOrFail($id);
-        return view('activity.edit', [
-            'activities' => $activities,
+        $getData = SuratMasuk::findOrFail($id);
+        return view('suratmasuk.edit', [
+            'suratmasuk' => $getData,
         ]);
     }
 
@@ -84,12 +91,14 @@ class ActivityController extends Controller
     public function update(Request $request, $id)
     {
         try {
-            $activities = Activity::findOrFail($id);
-            $activities->name = $request->name;
-            $activities->description = $request->description;
-            $activities->date = $request->date;
-            $activities->save();
-            return redirect('/activity')->with('status', 'Berhasil di ubah');
+            $getData = SuratMasuk::findOrFail($id);
+            $getData->tanggal = $request->tanggal;
+            $getData->no_surat = $request->no_surat;
+            $getData->asal_surat = $request->asal_surat;
+            $getData->keterangan = $request->keterangan;
+            $getData->dokumen = $request->dokumen;
+            $getData->save();
+            return redirect('/suratmasuk')->with('status', 'Berhasil di ubah');
         } catch (Exception $e) {
             return response()->json(
                 [
@@ -108,8 +117,8 @@ class ActivityController extends Controller
     public function destroy(Request $request)
     {
         try {
-            Activity::destroy($request->id);
-            return redirect('/activity')->with(
+            SuratMasuk::destroy($request->id);
+            return redirect('/suratmasuk')->with(
                 'status',
                 'Data berhasil di hapus'
             );
@@ -125,3 +134,4 @@ class ActivityController extends Controller
         }
     }
 }
+

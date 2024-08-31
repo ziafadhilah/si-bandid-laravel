@@ -98,8 +98,8 @@
                             <li><a href="{{ url('/haljol') }}" class="nav-link ms-3">HALJOL</a></li>
                             <li><a href="{{ url('/haljol') }}" class="nav-link ms-3">LAP PAM TUBUH PER TW</a></li>
                             <li><a href="{{ url('/haljol') }}" class="nav-link ms-3">LAP ADMIN PER SMT</a></li>
-                            <li><a href="{{ url('/haljol') }}" class="nav-link ms-3">SURAT MASUK</a></li>
-                            <li><a href="{{ url('/haljol') }}" class="nav-link ms-3">SURAT KELUAR</a></li>
+                            <li><a href="{{ url('/suratmasuk') }}" class="nav-link ms-3">SURAT MASUK</a></li>
+                            <li><a href="{{ url('/suratkeluar') }}" class="nav-link ms-3">SURAT KELUAR</a></li>
                             <li><a href="{{ url('/haljol') }}" class="nav-link ms-3">LAPSIT</a></li>
                             <li><a href="{{ url('/haljol') }}" class="nav-link ms-3">RENPAM</a></li>
                             <li><a href="{{ url('/haljol') }}" class="nav-link ms-3">BANGSUS</a></li>
