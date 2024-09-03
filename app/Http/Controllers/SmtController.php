@@ -2,21 +2,21 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\SuratKeluar;
+use App\Models\Smt;
 use Exception;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 
-class SuratKeluarController extends Controller
+class SmtController extends Controller
 {
     /**
      * Display a listing of the resource.
      */
     public function index()
     {
-        $getAll = SuratKeluar::all();
-        return view('suratkeluar.index', [
-            'suratkeluar' => $getAll,
+        $getAll = Smt::all();
+        return view('smt.index', [
+            'smt' => $getAll,
         ]);
     }
 
@@ -25,7 +25,7 @@ class SuratKeluarController extends Controller
      */
     public function create()
     {
-        return view('suratkeluar.create');
+        return view('smt.create');
     }
 
     /**
@@ -33,19 +33,18 @@ class SuratKeluarController extends Controller
      */
     public function store(Request $request)
     {
+        // dd($request);
         DB::beginTransaction();
 
         try {
-            $suratkeluarI = new SuratKeluar();
-            $suratkeluarI->tanggal = $request->tanggal;
-            $suratkeluarI->no_surat = $request->no_surat;
-            $suratkeluarI->tujuan_surat = $request->tujuan_surat;
-            $suratkeluarI->keterangan = $request->keterangan;
-            $suratkeluarI->dokumen = $request->dokumen;
-            $suratkeluarI->save();
+            $smtI = new Smt();
+            $smtI->proses = $request->proses;
+            $smtI->no_surat = $request->no_surat;
+            $smtI->dokumen = $request->dokumen;
+            $smtI->save();
 
             DB::commit();
-            return redirect('/suratkeluar')->with(
+            return redirect('/smt')->with(
                 'status',
                 'Data berhasil ditambahkan'
             );
@@ -67,10 +66,10 @@ class SuratKeluarController extends Controller
      */
     public function show($id)
     {
-        $getData = SuratKeluar::findOrFail($id);
+        $getData = Smt::findOrFail($id);
 
-        return view('suratkeluar.show', [
-            'suratkeluar' => $getData,
+        return view('smt.show', [
+            'smt' => $getData,
         ]);
     }
 
@@ -79,9 +78,9 @@ class SuratKeluarController extends Controller
      */
     public function edit($id)
     {
-        $getData = SuratKeluar::findOrFail($id);
-        return view('suratkeluar.edit', [
-            'suratkeluar' => $getData,
+        $getData = Smt::findOrFail($id);
+        return view('smt.edit', [
+            'smt' => $getData,
         ]);
     }
 
@@ -91,14 +90,12 @@ class SuratKeluarController extends Controller
     public function update(Request $request, $id)
     {
         try {
-            $getData = SuratKeluar::findOrFail($id);
-            $getData->tanggal = $request->tanggal;
+            $getData = Smt::findOrFail($id);
+            $getData->proses = $request->proses;
             $getData->no_surat = $request->no_surat;
-            $getData->tujuan_surat = $request->tujuan_surat;
-            $getData->keterangan = $request->keterangan;
             $getData->dokumen = $request->dokumen;
             $getData->save();
-            return redirect('/suratkeluar')->with('status', 'Berhasil di ubah');
+            return redirect('/smt')->with('status', 'Berhasil di ubah');
         } catch (Exception $e) {
             return response()->json(
                 [
@@ -117,8 +114,8 @@ class SuratKeluarController extends Controller
     public function destroy(Request $request)
     {
         try {
-            SuratKeluar::destroy($request->id);
-            return redirect('/suratkeluar')->with(
+            Smt::destroy($request->id);
+            return redirect('/smt')->with(
                 'status',
                 'Data berhasil di hapus'
             );

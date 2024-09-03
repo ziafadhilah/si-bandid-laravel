@@ -39,21 +39,21 @@
     </header>
     <section class="mt-5">
         <div class="container">
+            <div class="card" style="width: 18rem;">
+                <img src="..." class="card-img-top" alt="...">
+                 <div class="card-body">
             @foreach ($getActivityData as $data)
                 <p class="fs-3">{{ $data->name }}</p>
                 <p class="fs-6">{{ $data->description }}</p>
                 <p class="fs-6">{{ $data->date }}</p>
                 <button class="btn btn-outline-primary"
                     onclick="saveTheDate('{{ $data->name }}', '{{ $data->date }}')">Save The Date</button>
+                    <h5 class="card-title">Card title</h5>
+                        <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
+                    <a href="#" class="btn btn-primary">Go somewhere</a>
             @endforeach
         </div>
-        <div class="card" style="width: 18rem;">
-  <img src="..." class="card-img-top" alt="...">
-  <div class="card-body">
-    <h5 class="card-title">Card title</h5>
-    <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
-    <a href="#" class="btn btn-primary">Go somewhere</a>
-  </div>
+         </div>
 </div>
     </section>
     <script>

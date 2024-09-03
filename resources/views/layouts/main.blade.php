@@ -96,15 +96,15 @@
                     <div class="collapse" id="pamSubmenu">
                         <ul class="btn-toggle-nav list-unstyled fw-normal pb-1 small">
                             <li><a href="{{ url('/haljol') }}" class="nav-link ms-3">HALJOL</a></li>
-                            <li><a href="{{ url('/haljol') }}" class="nav-link ms-3">LAP PAM TUBUH PER TW</a></li>
-                            <li><a href="{{ url('/haljol') }}" class="nav-link ms-3">LAP ADMIN PER SMT</a></li>
+                            <li><a href="{{ url('/pam') }}" class="nav-link ms-3">LAP PAM TUBUH PER TW</a></li>
+                            <li><a href="{{ url('/smt') }}" class="nav-link ms-3">LAP ADMIN PER SMT</a></li>
                             <li><a href="{{ url('/suratmasuk') }}" class="nav-link ms-3">SURAT MASUK</a></li>
                             <li><a href="{{ url('/suratkeluar') }}" class="nav-link ms-3">SURAT KELUAR</a></li>
-                            <li><a href="{{ url('/haljol') }}" class="nav-link ms-3">LAPSIT</a></li>
-                            <li><a href="{{ url('/haljol') }}" class="nav-link ms-3">RENPAM</a></li>
-                            <li><a href="{{ url('/haljol') }}" class="nav-link ms-3">BANGSUS</a></li>
-                            <li><a href="{{ url('/haljol') }}" class="nav-link ms-3">LITPERS</a></li>
-                            <li><a href="{{ url('/haljol') }}" class="nav-link ms-3">NODIS/PENGAJUAN</a></li>
+                            <li><a href="{{ url('/lapsit') }}" class="nav-link ms-3">LAPSIT</a></li>
+                            <li><a href="{{ url('/renpam') }}" class="nav-link ms-3">RENPAM</a></li>
+                            <li><a href="{{ url('/bangsus') }}" class="nav-link ms-3">BANGSUS</a></li>
+                            <li><a href="{{ url('/litpers') }}" class="nav-link ms-3">LITPERS</a></li>
+                            <li><a href="{{ url('/pengajuan') }}" class="nav-link ms-3">NODIS/PENGAJUAN</a></li>
                         </ul>
                     </div>
                 </li>

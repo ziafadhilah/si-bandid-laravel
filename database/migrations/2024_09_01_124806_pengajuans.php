@@ -9,12 +9,14 @@ return new class extends Migration
     /**
      * Run the migrations.
      */
-    
     public function up(): void
     {
-        Schema::create('haljols', function (Blueprint $table) {
+        Schema::create('pengajuans', function (Blueprint $table) {
             $table->id();
-            $table->string('name', 255);
+            $table->string('jenis_pengajuan', 255);
+            $table->string('tujuan', 255);
+            $table->string('no_surat', 255);
+            $table->string('dokumen', 255);
             $table->timestamps();
         });
     }
@@ -24,6 +26,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('haljols');
+        Schema::dropIfExists('pengajuans');
     }
 };

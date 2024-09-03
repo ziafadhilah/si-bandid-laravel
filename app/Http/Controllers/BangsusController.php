@@ -2,21 +2,21 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\SuratKeluar;
+use App\Models\Bangsus; 
 use Exception;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 
-class SuratKeluarController extends Controller
+class BangsusController extends Controller
 {
     /**
      * Display a listing of the resource.
      */
     public function index()
     {
-        $getAll = SuratKeluar::all();
-        return view('suratkeluar.index', [
-            'suratkeluar' => $getAll,
+        $getAll = Bangsus::all();
+        return view('bangsus.index', [
+            'bangsus' => $getAll,
         ]);
     }
 
@@ -25,7 +25,7 @@ class SuratKeluarController extends Controller
      */
     public function create()
     {
-        return view('suratkeluar.create');
+        return view('bangsus.create');
     }
 
     /**
@@ -36,16 +36,14 @@ class SuratKeluarController extends Controller
         DB::beginTransaction();
 
         try {
-            $suratkeluarI = new SuratKeluar();
-            $suratkeluarI->tanggal = $request->tanggal;
-            $suratkeluarI->no_surat = $request->no_surat;
-            $suratkeluarI->tujuan_surat = $request->tujuan_surat;
-            $suratkeluarI->keterangan = $request->keterangan;
-            $suratkeluarI->dokumen = $request->dokumen;
-            $suratkeluarI->save();
+            $bangsusI = new Bangsus();
+            $bangsusI->bang_sus = $request->bang_sus;
+            $bangsusI->no_surat = $request->no_surat;
+            $bangsusI->dokumen = $request->dokumen;
+            $bangsusI->save();
 
             DB::commit();
-            return redirect('/suratkeluar')->with(
+            return redirect('/bangsus')->with(
                 'status',
                 'Data berhasil ditambahkan'
             );
@@ -67,10 +65,10 @@ class SuratKeluarController extends Controller
      */
     public function show($id)
     {
-        $getData = SuratKeluar::findOrFail($id);
+        $getData = Bangsus::findOrFail($id);
 
-        return view('suratkeluar.show', [
-            'suratkeluar' => $getData,
+        return view('bangsus.show', [
+            'bangsus' => $getData,
         ]);
     }
 
@@ -79,9 +77,9 @@ class SuratKeluarController extends Controller
      */
     public function edit($id)
     {
-        $getData = SuratKeluar::findOrFail($id);
-        return view('suratkeluar.edit', [
-            'suratkeluar' => $getData,
+        $getData = Bangsus::findOrFail($id);
+        return view('bangsus.edit', [
+            'bangsus' => $getData,
         ]);
     }
 
@@ -91,14 +89,12 @@ class SuratKeluarController extends Controller
     public function update(Request $request, $id)
     {
         try {
-            $getData = SuratKeluar::findOrFail($id);
-            $getData->tanggal = $request->tanggal;
+            $getData = Bangsus::findOrFail($id);
+            $getData->bang_sus = $request->bang_sus;
             $getData->no_surat = $request->no_surat;
-            $getData->tujuan_surat = $request->tujuan_surat;
-            $getData->keterangan = $request->keterangan;
             $getData->dokumen = $request->dokumen;
             $getData->save();
-            return redirect('/suratkeluar')->with('status', 'Berhasil di ubah');
+            return redirect('/bangsus')->with('status', 'Berhasil di ubah');
         } catch (Exception $e) {
             return response()->json(
                 [
@@ -117,8 +113,8 @@ class SuratKeluarController extends Controller
     public function destroy(Request $request)
     {
         try {
-            SuratKeluar::destroy($request->id);
-            return redirect('/suratkeluar')->with(
+            Bangsus::destroy($request->id);
+            return redirect('/bangsus')->with(
                 'status',
                 'Data berhasil di hapus'
             );
