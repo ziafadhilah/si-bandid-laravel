@@ -109,10 +109,17 @@
                     </div>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="#">
+                    <a class="nav-link" data-bs-toggle="collapse" href="#terSubmenu" role="button"
+                        aria-expanded="false" aria-controls="terSubmenu">
                         <i class="fas fa-arrow-right-arrow-left"></i>
                         TER
                     </a>
+                    <div class="collapse" id="terSubmenu">
+                        <ul class="btn-toggle-nav list-unstyled fw-normal pb-1 small">
+                            <li><a href="{{ url('/haljol') }}" class="nav-link ms-3">HALJOL</a></li>
+                            <li><a href="{{ url('/pam') }}" class="nav-link ms-3">LAP PAM TUBUH PER TW</a></li>
+                        </ul>
+                    </div>
                 </li>
                 <li class="nav-item">
                     <a class="nav-link" href="{{ url('/activity') }}">
@@ -141,34 +148,44 @@
         </div>
         <div class="offcanvas-body">
             <ul class="nav flex-column">
-                <li class="nav-item">
-                    <a class="nav-link active" aria-current="page" href="#">
-                        Dashboard
+            <li class="nav-item">
+                    <a class="nav-link" data-bs-toggle="collapse" href="#pamSubmenu" role="button"
+                        aria-expanded="false" aria-controls="pamSubmenu">
+                        <i class="fas fa-edit"></i>
+                        PAM
                     </a>
+                    <div class="collapse" id="pamSubmenu">
+                        <ul class="btn-toggle-nav list-unstyled fw-normal pb-1 small">
+                            <li><a href="{{ url('/haljol') }}" class="nav-link ms-3">HALJOL</a></li>
+                            <li><a href="{{ url('/pam') }}" class="nav-link ms-3">LAP PAM TUBUH PER TW</a></li>
+                            <li><a href="{{ url('/smt') }}" class="nav-link ms-3">LAP ADMIN PER SMT</a></li>
+                            <li><a href="{{ url('/suratmasuk') }}" class="nav-link ms-3">SURAT MASUK</a></li>
+                            <li><a href="{{ url('/suratkeluar') }}" class="nav-link ms-3">SURAT KELUAR</a></li>
+                            <li><a href="{{ url('/lapsit') }}" class="nav-link ms-3">LAPSIT</a></li>
+                            <li><a href="{{ url('/renpam') }}" class="nav-link ms-3">RENPAM</a></li>
+                            <li><a href="{{ url('/bangsus') }}" class="nav-link ms-3">BANGSUS</a></li>
+                            <li><a href="{{ url('/litpers') }}" class="nav-link ms-3">LITPERS</a></li>
+                            <li><a href="{{ url('/pengajuan') }}" class="nav-link ms-3">NODIS/PENGAJUAN</a></li>
+                        </ul>
+                    </div>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="#">
-                        Orders
+                    <a class="nav-link" data-bs-toggle="collapse" href="#terSubmenu" role="button"
+                        aria-expanded="false" aria-controls="terSubmenu">
+                        <i class="fas fa-arrow-right-arrow-left"></i>
+                        TER
                     </a>
+                    <div class="collapse" id="terSubmenu">
+                        <ul class="btn-toggle-nav list-unstyled fw-normal pb-1 small">
+                            <li><a href="{{ url('/haljol') }}" class="nav-link ms-3">HALJOL</a></li>
+                            <li><a href="{{ url('/pam') }}" class="nav-link ms-3">LAP PAM TUBUH PER TW</a></li>
+                        </ul>
+                    </div>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="{{ url('haljol') }}">
-                        HALJOL
-                    </a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="#">
-                        Customers
-                    </a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="#">
-                        Reports
-                    </a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="#">
-                        Integrations
+                    <a class="nav-link" href="{{ url('/activity') }}">
+                        <i class="fas fa-calendar-alt"></i>
+                        Kegiatan
                     </a>
                 </li>
                 <li class="nav-item">

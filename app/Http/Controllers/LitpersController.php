@@ -38,7 +38,7 @@ class LitpersController extends Controller
         try {
             $litpersI = new Litpers();
             $litpersI->name = $request->name;
-            $litpersI->pkt = $request->name;
+            $litpersI->pkt = $request->pkt;
             $litpersI->hasil = $request->hasil;
             $litpersI->dokumen = $request->dokumen;
             $litpersI->save();
