@@ -18,7 +18,7 @@ Route::get('/', [FrontendController::class, 'getActivityData']);
 
 // Route::get('/', function () {
 //     return view('index');
-// });
+// }); 
 
 Route::prefix('/haljol')->group(function () {
     Route::get('/', [HaljolController::class, 'index']);
@@ -130,7 +130,29 @@ Route::prefix('/litpers')->group(function () {
 });
 
 Route::prefix('/activity')->group(function () {
-    Route::get('/', [ActivityController::class, 'index']);
+Route::get('/', [ActivityController::class, 'index']);
+    Route::get('/create', [ActivityController::class, 'create']);
+    Route::post('/', [ActivityController::class, 'store']);
+    Route::get('/edit/{id}', [ActivityController::class, 'edit']);
+    Route::patch('/{id}', [ActivityController::class, 'update']);
+    Route::get('/show/{id}', [ActivityController::class, 'show']);
+    Route::delete('/{id}', [ActivityController::class, 'destroy']);
+});
+
+// MEMANGGIL URL TER->KARYA BAKTI
+Route::prefix('/ter/karyabakti')->group(function () {
+Route::get('/', [ActivityController::class, 'index']);
+    Route::get('/create', [ActivityController::class, 'create']);
+    Route::post('/', [ActivityController::class, 'store']);
+    Route::get('/edit/{id}', [ActivityController::class, 'edit']);
+    Route::patch('/{id}', [ActivityController::class, 'update']);
+    Route::get('/show/{id}', [ActivityController::class, 'show']);
+    Route::delete('/{id}', [ActivityController::class, 'destroy']);
+});
+
+// MEMANGGIL URL TER->KOMSOS
+Route::prefix('/ter/karyabakti')->group(function () {
+Route::get('/', [ActivityController::class, 'index']);
     Route::get('/create', [ActivityController::class, 'create']);
     Route::post('/', [ActivityController::class, 'store']);
     Route::get('/edit/{id}', [ActivityController::class, 'edit']);

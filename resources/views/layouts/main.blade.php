@@ -83,7 +83,7 @@
         <div class="position-sticky">
             <div class="d-flex justify-content-center me-md-auto pt-3 pb-3">
                 <a href="/" class="text-decoration-none navbar-brand">
-                    <span class="fs-3 text-white">SI-BANDID</span>
+                    <span class="fs-3 text-white">PAMUJI</span>
                 </a>
             </div>
             <ul class="nav nav-pills flex-column mb-auto">
@@ -116,8 +116,8 @@
                     </a>
                     <div class="collapse" id="terSubmenu">
                         <ul class="btn-toggle-nav list-unstyled fw-normal pb-1 small">
-                            <li><a href="{{ url('/haljol') }}" class="nav-link ms-3">HALJOL</a></li>
-                            <li><a href="{{ url('/pam') }}" class="nav-link ms-3">LAP PAM TUBUH PER TW</a></li>
+                            <li><a href="{{ url('/ter/karyabakti') }}" class="nav-link ms-3">KARYA BAKTI</a></li>
+                            <li><a href="{{ url('/ter/komsos') }}" class="nav-link ms-3">KOMSOS</a></li>
                         </ul>
                     </div>
                 </li>
@@ -143,7 +143,7 @@
     <!-- Offcanvas untuk tampilan mobile -->
     <div class="offcanvas offcanvas-start" tabindex="-1" id="offcanvasExample" aria-labelledby="offcanvasExampleLabel">
         <div class="offcanvas-header">
-            <h5 class="offcanvas-title" id="offcanvasExampleLabel">SI-BANDID</h5>
+            <h5 class="offcanvas-title" id="offcanvasExampleLabel">PAMUJI</h5>
             <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>
         </div>
         <div class="offcanvas-body">
@@ -165,7 +165,7 @@
                             <li><a href="{{ url('/renpam') }}" class="nav-link ms-3">RENPAM</a></li>
                             <li><a href="{{ url('/bangsus') }}" class="nav-link ms-3">BANGSUS</a></li>
                             <li><a href="{{ url('/litpers') }}" class="nav-link ms-3">LITPERS</a></li>
-                            <li><a href="{{ url('/pengajuan') }}" class="nav-link ms-3">NODIS/PENGAJUAN</a></li>
+                             <li><a href="{{ url('/pengajuan') }}" class="nav-link ms-3">NODIS/PENGAJUAN</a></li>
                         </ul>
                     </div>
                 </li>
@@ -177,8 +177,8 @@
                     </a>
                     <div class="collapse" id="terSubmenu">
                         <ul class="btn-toggle-nav list-unstyled fw-normal pb-1 small">
-                            <li><a href="{{ url('/haljol') }}" class="nav-link ms-3">HALJOL</a></li>
-                            <li><a href="{{ url('/pam') }}" class="nav-link ms-3">LAP PAM TUBUH PER TW</a></li>
+                            <li><a href="{{ url('/ter/karyabakti') }}" class="nav-link ms-3">KARYA BAKTI</a></li>
+                            <li><a href="{{ url('/ter/komsos') }}" class="nav-link ms-3">KOMSOS</a></li>
                         </ul>
                     </div>
                 </li>
