@@ -64,7 +64,7 @@
                         <li class="nav-item">
                             <!-- Gambar profil -->
                             <a href="{{ url('/profile') }}">
-                                <img src="path_to_profile_image.jpg" alt="Profile" class="profile-img">
+                                <img src="../resources/img/LOGO_RUDAL 1.png" alt="Profile" class="profile-img">
                             </a>
                         </li>
                     </ul>

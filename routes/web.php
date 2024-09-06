@@ -4,6 +4,7 @@ use App\Http\Controllers\ActivityController;
 use App\Http\Controllers\BangsusController;
 use App\Http\Controllers\FrontendController;
 use App\Http\Controllers\HaljolController;
+use App\Http\Controllers\KaryabaktiController;
 use App\Http\Controllers\LapsitController;
 use App\Http\Controllers\LitpersController;
 use App\Http\Controllers\PamController;
@@ -141,13 +142,13 @@ Route::get('/', [ActivityController::class, 'index']);
 
 // MEMANGGIL URL TER->KARYA BAKTI
 Route::prefix('/ter/karyabakti')->group(function () {
-Route::get('/', [ActivityController::class, 'index']);
-    Route::get('/create', [ActivityController::class, 'create']);
-    Route::post('/', [ActivityController::class, 'store']);
-    Route::get('/edit/{id}', [ActivityController::class, 'edit']);
-    Route::patch('/{id}', [ActivityController::class, 'update']);
-    Route::get('/show/{id}', [ActivityController::class, 'show']);
-    Route::delete('/{id}', [ActivityController::class, 'destroy']);
+Route::get('/ter', [KaryabaktiController::class, 'index']);
+    Route::get('/ter/create', [KaryabaktiController::class, 'create']);
+    Route::post('/ter', [KaryabaktiController::class, 'store']);
+    Route::get('/ter/edit/{id}', [KaryabaktiController::class, 'edit']);
+    Route::patch('/ter/{id}', [KaryabaktiController::class, 'update']);
+    Route::get('/ter/show/{id}', [KaryabaktiController::class, 'show']);
+    Route::delete('/ter/{id}', [KaryabaktiController::class, 'destroy']);
 });
 
 // MEMANGGIL URL TER->KOMSOS
