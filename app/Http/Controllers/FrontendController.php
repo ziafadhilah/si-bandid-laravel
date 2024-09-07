@@ -10,7 +10,7 @@ class FrontendController extends Controller
     public function getActivityData()
     {
         $getActivityData = Activity::all();
-        return view('index', [
+        return view('frontend.index', [
             'getActivityData' => $getActivityData
         ]);
     }

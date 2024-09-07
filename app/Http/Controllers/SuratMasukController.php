@@ -6,6 +6,7 @@ use App\Models\SuratMasuk;
 use Exception;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Storage;
 
 class SuratMasukController extends Controller
 {
@@ -41,7 +42,15 @@ class SuratMasukController extends Controller
             $suratmasukI->no_surat = $request->no_surat;
             $suratmasukI->asal_surat = $request->asal_surat;
             $suratmasukI->keterangan = $request->keterangan;
-            $suratmasukI->dokumen = $request->dokumen;
+
+            // Proses upload file
+            if ($request->hasFile('dokumen')) {
+                $file = $request->file('dokumen');
+                $filename = time() . '_' . $file->getClientOriginalName();
+                $path = $file->storeAs('public/dokumen', $filename);
+                $suratmasukI->dokumen = $filename;
+            }
+
             $suratmasukI->save();
 
             DB::commit();
@@ -96,7 +105,18 @@ class SuratMasukController extends Controller
             $getData->no_surat = $request->no_surat;
             $getData->asal_surat = $request->asal_surat;
             $getData->keterangan = $request->keterangan;
-            $getData->dokumen = $request->dokumen;
+
+            if ($request->hasFile('dokumen')) {
+                // Hapus file lama jika ada
+                if ($getData->dokumen) {
+                    Storage::delete('public/dokumen/' . $getData->dokumen);
+                }
+
+                $file = $request->file('dokumen');
+                $filename = time() . '_' . $file->getClientOriginalName();
+                $path = $file->storeAs('public/dokumen', $filename);
+                $getData->dokumen = $filename;
+            }
             $getData->save();
             return redirect('/suratmasuk')->with('status', 'Berhasil di ubah');
         } catch (Exception $e) {
@@ -134,4 +154,3 @@ class SuratMasukController extends Controller
         }
     }
 }
-
