@@ -5,7 +5,6 @@ use App\Http\Controllers\AuthController;
 use App\Http\Controllers\BangsusController;
 use App\Http\Controllers\FrontendController;
 use App\Http\Controllers\HaljolController;
-use App\Http\Controllers\KaryabaktiController;
 use App\Http\Controllers\LapsitController;
 use App\Http\Controllers\LitpersController;
 use App\Http\Controllers\PamController;
@@ -14,7 +13,12 @@ use App\Http\Controllers\RenpamController;
 use App\Http\Controllers\SmtController;
 use App\Http\Controllers\SuratKeluarController;
 use App\Http\Controllers\SuratMasukController;
+use App\Http\Controllers\KaryabaktiController;
+use App\Http\Controllers\KomsosController;
+// use App\Http\Controllers\KomsosController;
 use Illuminate\Support\Facades\Route;
+
+
 
 Route::get('/', [FrontendController::class, 'getActivityData'])->name('userOnly');
 
@@ -28,18 +32,18 @@ Route::group(['middleware' => 'guest'], function () {
     Route::get('register', [
         AuthController::class,
         'showRegistrationForm'
-    ])->name('register');
-    Route::post('register', [AuthController::class, 'register']);
-});
+        ])->name('register');
+        Route::post('register', [AuthController::class, 'register']);
+    });
 
-Route::group(['middleware' => 'auth'], function () {
-
-    // Logout
-    Route::post('logout', [AuthController::class, 'logout'])->name('logout');
-
-    // Memanggil URL haljol
-    Route::prefix('/haljol')->group(function () {
-        Route::get('/', [HaljolController::class, 'index']);
+    Route::group(['middleware' => 'auth'], function () {
+        
+        // Logout
+        Route::post('logout', [AuthController::class, 'logout'])->name('logout');
+        
+        // Memanggil URL haljol
+        Route::prefix('/haljol')->group(function () {
+            Route::get('/', [HaljolController::class, 'index']);
         Route::get('/create', [HaljolController::class, 'create']);
         Route::post('/', [HaljolController::class, 'store']);
         Route::get('/edit/{id}', [HaljolController::class, 'edit']);
@@ -156,26 +160,27 @@ Route::group(['middleware' => 'auth'], function () {
         Route::get('/show/{id}', [ActivityController::class, 'show']);
         Route::delete('/{id}', [ActivityController::class, 'destroy']);
     });
+    
+    // Rute resource utama untuk Karyabakti
+    Route::resource('ter/karyabakti', KaryabaktiController::class);
 
-    // MEMANGGIL URL TER->KARYA BAKTI
-    Route::prefix('/ter/karyabakti')->group(function () {
-        Route::get('/ter', [KaryabaktiController::class, 'index']);
-        Route::get('/ter/create', [KaryabaktiController::class, 'create']);
-        Route::post('/ter', [KaryabaktiController::class, 'store']);
-        Route::get('/ter/edit/{id}', [KaryabaktiController::class, 'edit']);
-        Route::patch('/ter/{id}', [KaryabaktiController::class, 'update']);
-        Route::get('/ter/show/{id}', [KaryabaktiController::class, 'show']);
-        Route::delete('/ter/{id}', [KaryabaktiController::class, 'destroy']);
-    });
+    // Rute tambahan untuk custom actions seperti edit dan show
+    Route::get('/ter/karyabakti/edit/{id}', [KaryabaktiController::class, 'edit'])->name('karyabakti.edit');
+    Route::get('/ter/karyabakti/show/{id}', [KaryabaktiController::class, 'show'])->name('karyabakti.show');
+    Route::post('/ter/karyabakti/update/{id}', [KaryabaktiController::class, 'update'])->name('karyabakti.update');
 
     // MEMANGGIL URL TER->KOMSOS
-    Route::prefix('/ter/karyabakti')->group(function () {
-        Route::get('/', [ActivityController::class, 'index']);
-        Route::get('/create', [ActivityController::class, 'create']);
-        Route::post('/', [ActivityController::class, 'store']);
-        Route::get('/edit/{id}', [ActivityController::class, 'edit']);
-        Route::patch('/{id}', [ActivityController::class, 'update']);
-        Route::get('/show/{id}', [ActivityController::class, 'show']);
-        Route::delete('/{id}', [ActivityController::class, 'destroy']);
+    Route::resource('ter/komsos', KomsosController::class);
+    Route::get('/ter/komsos/edit/{id}', [KomsosController::class, 'edit'])->name('komsos.edit');
+    Route::post('/ter/komsos/update/{id}', [KomsosController::class, 'update'])->name('komsos.update');
+
+    Route::prefix('/ter/komsos')->group(function () {
+        Route::get('/ter/komsos', [KomsosController::class, 'index']);
+        Route::get('/ter/komsos/create', [KomsosController::class, 'create']);
+        Route::post('/ter/komsos', [KomsosController::class, 'store']);
+        Route::get('/ter/komsos/edit/{id}', [KomsosController::class, 'edit']);
+        Route::patch('/ter/komsos/{id}', [KomsosController::class, 'update']);
+        Route::get('/ter/komsos/show/{id}', [KomsosController::class, 'show']);
+        Route::delete('/ter/komsos/{id}', [KomsosController::class, 'destroy']);
     });
 });

@@ -33,15 +33,29 @@ class HaljolController extends Controller
      */
     public function store(Request $request)
     {
+        $request->validate([
+            'sas' => 'required|string|max:255',
+            'tanggal' => 'required|date',
+            'dokumen' => 'required|file|mimes:pdf,doc,docx|max:2048', // Validasi dokumen harus ada
+        ]);
+        
         DB::beginTransaction();
 
         try {
             $haljolI = new Haljol();
             $haljolI->name = $request->name;
+             // Proses upload file
+             if ($request->hasFile('dokumen')) {
+                $file = $request->file('dokumen');
+                $filename = time() . '_' . $file->getClientOriginalName();
+                $path = $file->storeAs('public/dokumen', $filename);
+                $haljolI->dokumen = $filename;
+            }
             $haljolI->save();
 
             DB::commit();
-            return redirect('/haljol')->with(
+            return redirect('/haljol
+            ')->with(
                 'status',
                 'Data berhasil ditambahkan'
             );

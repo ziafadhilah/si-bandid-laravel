@@ -1,3 +1,6 @@
 <div>
-    Detail Nama {{ $haljol->name }}
+    Detail {{ $haljol->sas }}
+    Detail {{ $haljol->tanggal }}
+    Detail {{ $haljol->dokumen }}
 </div>
+ 

@@ -2,22 +2,22 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Karyabakti;
+use App\Models\Komsos;
 use Exception;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Storage;
 
-class KaryabaktiController extends Controller
+class KomsosController extends Controller
 {
    /**
      * Display a listing of the resource.
      */
     public function index()
     {
-        $getAll = Karyabakti::all();
-        return view('ter.karyabakti.index', [
-            'karyabakti' => $getAll,
+        $getAll = Komsos::all();
+        return view('ter.komsos.index', [
+            'komsos' => $getAll,
         ]);
     }
 
@@ -26,7 +26,7 @@ class KaryabaktiController extends Controller
      */
     public function create()
     {
-        return view('ter.karyabakti.create');
+        return view('ter.komsos.create');
     }
 
     /**
@@ -43,23 +43,23 @@ class KaryabaktiController extends Controller
         DB::beginTransaction();
 
         try {
-            $karyabaktiI = new Karyabakti();
-            $karyabaktiI->sas = $request->sas;
-            $karyabaktiI->tanggal = $request->tanggal;
-            $karyabaktiI->dokumen = $request->dokumen;
+            $komsosI = new Komsos();
+            $komsosI->sas = $request->sas;
+            $komsosI->tanggal = $request->tanggal;
+            $komsosI->dokumen = $request->dokumen;
 
             // Proses upload file
             if ($request->hasFile('dokumen')) {
                 $file = $request->file('dokumen');
                 $filename = time() . '_' . $file->getClientOriginalName();
                 $path = $file->storeAs('public/dokumen', $filename);
-                $karyabaktiI->dokumen = $filename;
+                $komsosI->dokumen = $filename;
             }
 
-            $karyabaktiI->save();
+            $komsosI->save();
 
             DB::commit();
-            return redirect('/ter/karyabakti')->with(
+            return redirect('/ter/komsos')->with(
                 'status',
                 'Data berhasil ditambahkan'
             );
@@ -81,10 +81,10 @@ class KaryabaktiController extends Controller
      */
     public function show($id)
     {
-        $getData = Karyabakti::findOrFail($id);
+        $getData = Komsos::findOrFail($id);
 
-        return view('ter.karyabakti.show', [
-            'karyabakti' => $getData,
+        return view('ter.komsos.show', [
+            'komsos' => $getData,
         ]);
     }
 
@@ -93,9 +93,9 @@ class KaryabaktiController extends Controller
      */
     public function edit($id)
     {
-        $getData = Karyabakti::findOrFail($id);
-        return view('ter.karyabakti.edit', [
-            'karyabakti' => $getData,
+        $getData = Komsos::findOrFail($id);
+        return view('ter.komsos.edit', [
+            'komsos' => $getData,
         ]);
     }
 
@@ -111,7 +111,7 @@ class KaryabaktiController extends Controller
         ]);
         
         try {
-            $getData = Karyabakti::findOrFail($id);
+            $getData = Komsos::findOrFail($id);
             $getData->sas = $request->sas;
             $getData->tanggal = $request->tanggal;
             $getData->dokumen = $request->dokumen;
@@ -128,7 +128,7 @@ class KaryabaktiController extends Controller
                 $getData->dokumen = $filename;
             }
             $getData->save();
-            return redirect('/ter/karyabakti')->with('status', 'Berhasil di ubah');
+            return redirect('/ter/komsos')->with('status', 'Berhasil di ubah');
         } catch (Exception $e) {
             return response()->json(
                 [
@@ -167,7 +167,7 @@ class KaryabaktiController extends Controller
 {
     try {
         // Temukan data berdasarkan ID
-        $getData = Karyabakti::findOrFail($id);
+        $getData = Komsos::findOrFail($id);
 
         // Hapus file dokumen terkait jika ada
         if ($getData->dokumen) {
@@ -178,7 +178,7 @@ class KaryabaktiController extends Controller
         $getData->delete();
 
         // Redirect dengan pesan sukses
-        return redirect('/ter/karyabakti')->with('status', 'Data berhasil dihapus');
+        return redirect('/ter/komsos')->with('status', 'Data berhasil dihapus');
     } catch (Exception $e) {
         return response()->json([
             'message' => 'Internal error',

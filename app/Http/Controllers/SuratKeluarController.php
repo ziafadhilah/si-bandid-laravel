@@ -41,7 +41,16 @@ class SuratKeluarController extends Controller
             $suratkeluarI->no_surat = $request->no_surat;
             $suratkeluarI->tujuan_surat = $request->tujuan_surat;
             $suratkeluarI->keterangan = $request->keterangan;
-            $suratkeluarI->dokumen = $request->dokumen;
+            
+             // Proses upload file
+             if ($request->hasFile('dokumen')) {
+                $file = $request->file('dokumen');
+                $filename = time() . '_' . $file->getClientOriginalName();
+                $path = $file->storeAs('public/dokumen', $filename);
+                $suratkeluarI->dokumen = $filename;
+            }
+
+
             $suratkeluarI->save();
 
             DB::commit();

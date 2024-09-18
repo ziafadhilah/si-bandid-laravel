@@ -40,7 +40,13 @@ class LitpersController extends Controller
             $litpersI->name = $request->name;
             $litpersI->pkt = $request->pkt;
             $litpersI->hasil = $request->hasil;
-            $litpersI->dokumen = $request->dokumen;
+             // Proses upload file
+             if ($request->hasFile('dokumen')) {
+                $file = $request->file('dokumen');
+                $filename = time() . '_' . $file->getClientOriginalName();
+                $path = $file->storeAs('public/dokumen', $filename);
+                $litpersI->dokumen = $filename;
+            }
             $litpersI->save();
 
             DB::commit();

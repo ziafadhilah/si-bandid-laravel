@@ -1,6 +1,6 @@
 @extends('layouts/main')
 @section('content')
-    <form action="/litpers/{{ $litpers->id }}" method="POST">
+    <form action="/litpers/{{ $litpers->id }}" method="POST" enctype="multipart/form-data">
     @method('patch')    
     @csrf
         <div class="card-body mt-4">
@@ -25,7 +25,16 @@
             <div class="mb-3 row">
                 <label class="col-lg-2 col-form-label">Dokumen</label>
                 <div class="col-lg-4">
-                    <input type="text" class="form-control" name="dokumen" autocomplete="off" value="{{ $litpers->dokumen }}">
+                    <!-- Input file untuk upload dokumen baru -->
+                    <input type="file" class="form-control" name="dokumen" autocomplete="off">
+                    @if ($litpers->dokumen)
+                        <small class="form-text text-muted mt-2">
+                            File sebelumnya:
+                            <a href="{{ asset('storage/dokumen/' . $litpers->dokumen) }}" target="_blank">
+                                {{ $litpers->dokumen }}
+                            </a>
+                        </small>
+                    @endif
                 </div>
             </div>
         </div>

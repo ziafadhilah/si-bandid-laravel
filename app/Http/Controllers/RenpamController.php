@@ -39,7 +39,13 @@ class RenpamController extends Controller
             $renpamI = new Renpam();
             $renpamI->tanggal = $request->tanggal;
             $renpamI->giat_pam = $request->giat_pam;
-            $renpamI->dokumen = $request->dokumen;
+            // Proses upload file
+            if ($request->hasFile('dokumen')) {
+                $file = $request->file('dokumen');
+                $filename = time() . '_' . $file->getClientOriginalName();
+                $path = $file->storeAs('public/dokumen', $filename);
+                $renpamI->dokumen = $filename;
+            }
             $renpamI->save();
 
             DB::commit();

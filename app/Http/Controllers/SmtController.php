@@ -40,7 +40,13 @@ class SmtController extends Controller
             $smtI = new Smt();
             $smtI->proses = $request->proses;
             $smtI->no_surat = $request->no_surat;
-            $smtI->dokumen = $request->dokumen;
+             // Proses upload file
+             if ($request->hasFile('dokumen')) {
+                $file = $request->file('dokumen');
+                $filename = time() . '_' . $file->getClientOriginalName();
+                $path = $file->storeAs('public/dokumen', $filename);
+                $smtI->dokumen = $filename;
+            }
             $smtI->save();
 
             DB::commit();

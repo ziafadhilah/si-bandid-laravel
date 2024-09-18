@@ -21,7 +21,14 @@
                         <td>{{ $data->jenis_pengajuan }}</td>
                         <td>{{ $data->tujuan }}</td>
                         <td>{{ $data->no_surat }}</td>
-                        <td>{{ $data->dokumen}}</td>
+                        <td> @if ($data->dokumen)
+                                <a href="{{ asset('storage/dokumen/' . $data->dokumen) }}" target="_blank">
+                                    {{ $data->dokumen }}
+                                </a>
+                            @else
+                                <span class="text-muted">Tidak ada dokumen</span>
+                            @endif
+                        </td>
                         <td class="text-center">
                             <a href="/pengajuan/edit/{{ $data->id }}" class="btn btn-outline-success btn-sm">
                                 <i class="fas fa-pencil"></i>

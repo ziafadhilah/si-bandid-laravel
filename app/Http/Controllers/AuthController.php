@@ -27,7 +27,7 @@ class AuthController extends Controller
 
         if (Auth::attempt($credentials)) {
             $user = Auth::user();
-            if ($user->isAdmin()) {
+        if ($user->isAdmin()) {
                 return redirect()->route('activity');
             } else {
                 return redirect()->route('userOnly');

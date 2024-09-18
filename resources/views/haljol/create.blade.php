@@ -1,6 +1,6 @@
 @extends('layouts/main')
 @section('content')
-    <form action="/haljol" method="POST">
+    <form action="/haljol" method="POST" enctype="multipart/form-data">
         @csrf
         <div class="card-body mt-4">
             <div class="mb-3 row">

@@ -36,7 +36,7 @@
                         <td class="text-center">
                             <a href="/suratmasuk/edit/{{ $data->id }}" class="btn btn-outline-success btn-sm">
                                 <i class="fas fa-pencil"></i>
-                            </a>
+                             </a>
                             <a href="/suratmasuk/show/{{ $data->id }}" class="btn btn-outline-primary btn-sm">
                                 <i class="fas fa-eye"></i>
                             </a>

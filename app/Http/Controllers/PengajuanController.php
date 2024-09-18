@@ -40,7 +40,13 @@ class PengajuanController extends Controller
             $pengajuanI->jenis_pengajuan = $request->jenis_pengajuan;
             $pengajuanI->tujuan = $request->tujuan;
             $pengajuanI->no_surat = $request->no_surat;
-            $pengajuanI->dokumen = $request->dokumen;
+             // Proses upload file
+             if ($request->hasFile('dokumen')) {
+                $file = $request->file('dokumen');
+                $filename = time() . '_' . $file->getClientOriginalName();
+                $path = $file->storeAs('public/dokumen', $filename);
+                $pengajuanI->dokumen = $filename;
+            }
             $pengajuanI->save();
 
             DB::commit();

@@ -1,6 +1,6 @@
 @extends('layouts/main')
 @section('content')
-    <form action="/activity" method="POST">
+    <form action="/activity" method="POST" >
         @csrf
         <div class="card-body mt-4">
             <div class="mb-3 row">

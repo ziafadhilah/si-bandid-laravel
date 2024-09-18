@@ -1,6 +1,5 @@
 <div>
-     {{ $pengajuan->jenis_pengajuan }}
-     {{ $pengajuan->tujuan }}
-     {{ $pengajuan->no_surat }}
-     {{ $pengajuan->dokumen }}
+     {{ $bangsus->bang_sus }}
+     {{ $bangsus->no_surat }}
+     {{ $bangsus->dokumen }}
 </div>

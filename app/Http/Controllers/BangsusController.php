@@ -39,7 +39,13 @@ class BangsusController extends Controller
             $bangsusI = new Bangsus();
             $bangsusI->bang_sus = $request->bang_sus;
             $bangsusI->no_surat = $request->no_surat;
-            $bangsusI->dokumen = $request->dokumen;
+            // Proses upload file
+            if ($request->hasFile('dokumen')) {
+                $file = $request->file('dokumen');
+                $filename = time() . '_' . $file->getClientOriginalName();
+                $path = $file->storeAs('public/dokumen', $filename);
+                $bangsusI->dokumen = $filename;
+            }
             $bangsusI->save();
 
             DB::commit();

@@ -8,6 +8,7 @@
                 <tr>
                     <td>No</td>
                     <td>Nama</td>
+                    <td>Dokumen</td>
                     <td class="text-center">Action</td>
                 </tr>
             </thead>
@@ -16,6 +17,15 @@
                     <tr>
                         <td>{{ $loop->iteration }}</td>
                         <td>{{ $get->name }}</td>
+                        <td>
+                        @if ($get->dokumen)
+                                <a href="{{ asset('storage/dokumen/' . $get->dokumen) }}" target="_blank">
+                                    {{ $get->dokumen }}
+                                </a>
+                            @else
+                                <span class="text-muted">Tidak ada dokumen</span>
+                            @endif
+                        </td>
                         <td class="text-center">
                             <a href="/haljol/edit/{{ $get->id }}" class="btn btn-outline-success btn-sm">
                                 <i class="fas fa-pencil"></i>

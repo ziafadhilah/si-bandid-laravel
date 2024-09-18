@@ -60,7 +60,7 @@
                     <input type="checkbox" class="form-check-input" id="remember" name="remember">
                     <label class="form-check-label" for="remember">Remember me</label>
                 </div>
-                <a href="#" class="text-primary">Forgot Password?</a>
+                <a href="" class="text-primary">Register</a>
             </div>
             <button type="submit" class="btn btn-primary">Login</button>
         </form>

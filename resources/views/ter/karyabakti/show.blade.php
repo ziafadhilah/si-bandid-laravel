@@ -1,3 +1,5 @@
 <div>
-    Detail Nama {{ $karyabakti->name }}
+    Detail {{ $karyabakti->sas }}
+    Detail {{ $karyabakti->tanggal }}
+    Detail {{ $karyabakti->dokumen }}
 </div>
