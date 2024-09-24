@@ -5,7 +5,6 @@ namespace App\Http\Controllers;
 use App\Models\Karyabakti;
 use Exception;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Storage;
 
 class KaryabaktiController extends Controller
@@ -34,46 +33,27 @@ class KaryabaktiController extends Controller
      */
     public function store(Request $request)
     {
+        // Validasi
         $request->validate([
-            'sas' => 'required|string|max:255',
+            'sas' => 'required',
             'tanggal' => 'required|date',
-            'dokumen' => 'required|file|mimes:pdf,doc,docx|max:2048', // Validasi dokumen harus ada
+            'dokumen' => 'required|mimes:pdf,doc,docx,xls,xlsx|max:2048',
         ]);
 
-        DB::beginTransaction();
+        // Menyimpan file
+        if ($request->hasFile('dokumen')) {
+            $fileName = time() . '_' . $request->file('dokumen')->getClientOriginalName();
+            $filePath = $request->file('dokumen')->storeAs('uploads', $fileName, 'public');
 
-        try {
+            // Simpan path ke database
             $karyabaktiI = new Karyabakti();
-            $karyabaktiI->sas = $request->sas;
-            $karyabaktiI->tanggal = $request->tanggal;
-            $karyabaktiI->dokumen = $request->dokumen;
-
-            // Proses upload file
-            if ($request->hasFile('dokumen')) {
-                $file = $request->file('dokumen');
-                $filename = time() . '_' . $file->getClientOriginalName();
-                $path = $file->storeAs('public/dokumen', $filename);
-                $karyabaktiI->dokumen = $filename;
-            }
-
+            $karyabaktiI->sas = $request->input('sas');
+            $karyabaktiI->tanggal = $request->input('tanggal');
+            $karyabaktiI->dokumen = $filePath;
             $karyabaktiI->save();
-
-            DB::commit();
-            return redirect('/ter/karyabakti')->with(
-                'status',
-                'Data berhasil ditambahkan'
-            );
-        } catch (Exception $e) {
-            DB::rollback();
-            return response()->json(
-                [
-                    'message' => 'Internal error',
-                    'code' => 500,
-                    'error' => true,
-                    'errors' => $e,
-                ],
-            );
         }
+
+        return redirect()->back()->with('success', 'File berhasil diunggah');
     }
 
     /**
@@ -107,15 +87,15 @@ class KaryabaktiController extends Controller
         $request->validate([
             'sas' => 'required|string|max:255',
             'tanggal' => 'required|date',
-            'dokumen' => 'required|file|mimes:pdf,doc,docx|max:2048', // Validasi dokumen harus ada
+            'dokumen' => 'required|file|mimes:pdf,doc,docx|max:2048',
         ]);
-        
+
         try {
             $getData = Karyabakti::findOrFail($id);
             $getData->sas = $request->sas;
             $getData->tanggal = $request->tanggal;
             $getData->dokumen = $request->dokumen;
-           
+
             if ($request->hasFile('dokumen')) {
                 // Hapus file lama jika ada
                 if ($getData->dokumen) {
@@ -144,49 +124,31 @@ class KaryabaktiController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    /*public function destroy(Request $request)
+    public function destroy($id)
     {
         try {
-            Karyabakti::destroy($request->id);
-            return redirect('/ter/karyabakti')->with(
-                'status',
-                'Data berhasil di hapus'
-            );
+            // Temukan data berdasarkan ID
+            $getData = Karyabakti::findOrFail($id);
+
+            // Hapus file dokumen terkait jika ada
+            if ($getData->dokumen) {
+                Storage::delete('public/dokumen/' . $getData->dokumen);
+            }
+
+            // Hapus data dari database
+            $getData->delete();
+
+            // Redirect dengan pesan sukses
+            return redirect('/ter/karyabakti')->with('status', 'Data berhasil dihapus');
         } catch (Exception $e) {
-            return response()->json(
-                [
-                    'message' => 'Internal error',
-                    'code' => 500,
-                    'error' => true,
-                    'errors' => $e,
-                ],
-            );
+            return response()->json([
+                'message' => 'Internal error',
+                'code' => 500,
+                'error' => true,
+                'errors' => $e,
+            ]);
         }
-    }*/
-    public function destroy($id)
-{
-    try {
-        // Temukan data berdasarkan ID
-        $getData = Karyabakti::findOrFail($id);
-
-        // Hapus file dokumen terkait jika ada
-        if ($getData->dokumen) {
-            Storage::delete('public/dokumen/' . $getData->dokumen);
-        }
-
-        // Hapus data dari database
-        $getData->delete();
-
-        // Redirect dengan pesan sukses
-        return redirect('/ter/karyabakti')->with('status', 'Data berhasil dihapus');
-    } catch (Exception $e) {
-        return response()->json([
-            'message' => 'Internal error',
-            'code' => 500,
-            'error' => true,
-            'errors' => $e,
-        ]);
     }
 }
 
-}
+?>

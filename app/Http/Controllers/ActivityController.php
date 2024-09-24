@@ -18,6 +18,20 @@ class ActivityController extends Controller
         return view('activity.index', [
             'activities' => $activities,
         ]);
+        
+        // Mencari kegiatan berdasarkan search query
+        $search = $request->input('search');
+
+        if ($search) {
+            $activities = Activity::where('name', 'like', '%' . $search . '%')
+                ->orWhere('description', 'like', '%' . $search . '%')
+                ->orderBy('date', 'asc')
+                ->get();
+        } else {
+            $activities = Activity::orderBy('date', 'asc')->get();
+        }
+
+        return view('activity.index', ['activities' => $activities]);
     }
 
     /**

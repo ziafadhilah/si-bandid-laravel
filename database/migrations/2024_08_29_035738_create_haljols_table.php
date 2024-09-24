@@ -15,6 +15,7 @@ return new class extends Migration
         Schema::create('haljols', function (Blueprint $table) {
             $table->id();
             $table->string('name', 255);
+            $table->string('dokumen');
             $table->timestamps();
         });
     }

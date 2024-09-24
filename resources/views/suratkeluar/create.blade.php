@@ -19,7 +19,7 @@
             <div class="mb-3 row">
                 <label class="col-lg-2 col-form-label">Tujuan Surat</label>
                 <div class="col-lg-4">
-                    <input type="text" class="form-control" name="tujuan_surat" autocomplete="off">
+                    <input type="text" cl?ass="form-control" name="tujuan_surat" autocomplete="off">
                 </div>
             </div>
             <div class="mb-3 row">

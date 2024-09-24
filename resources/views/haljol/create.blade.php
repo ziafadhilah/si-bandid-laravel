@@ -10,9 +10,9 @@
                 </div>
             </div>
             <div class="mb-3 row">
-                <label class="col-lg-2 col-form-label">File</label>
+                <label class="col-lg-2 col-form-label">Dokumen</label>
                 <div class="col-lg-4">
-                    <input type="file" class="form-control" name="file" autocomplete="off">
+                    <input type="file" class="form-control" name="dokumen" autocomplete="off">
                 </div>
                 <label class="col-lg-4 col-form-label text-danger">Only PDF, Word, Excel Accepted</label>
             </div>

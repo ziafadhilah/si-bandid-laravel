@@ -95,7 +95,7 @@ class KomsosController extends Controller
     {
         $getData = Komsos::findOrFail($id);
         return view('ter.komsos.edit', [
-            'komsos' => $getData,
+            'komsoss' => $getData,
         ]);
     }
 

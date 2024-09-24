@@ -21,12 +21,11 @@
             color: white;
         }
 
-        /* CSS untuk gambar profil */
         .profile-img {
-            width: 40px; /* Ukuran gambar */
+            width: 40px;
             height: 40px;
-            border-radius: 50%; /* Membuat gambar berbentuk lingkaran */
-            object-fit: cover; /* Agar gambar pas di dalam lingkaran */
+            border-radius: 50%;
+            object-fit: cover;
         }
 
         .navbar-nav .nav-item {
@@ -47,27 +46,21 @@
                 <div class="collapse navbar-collapse" id="navbarNav">
                     <ul class="navbar-nav me-auto mb-2 mb-lg-0">
                         <li class="nav-item">
-                            <a class="nav-link active" aria-current="page" href="{{ url('/activity') }}">Activity</a>
+                            <a class="nav-link active" href="{{ url('/activity') }}">Activity</a>
                         </li>
+                    </ul>
+                    <ul class="navbar-nav right-link">
                         <li class="nav-item">
+                            <a class="nav-link disabled" href="{{ url('#') }}">Copyright © Yon Arhanud 7/ABC</a>
+                        </li>
+                    </ul>
+                       <!-- <li class="nav-item">
                             <a class="nav-link" href="{{ url('/profile') }}">Profile</a>
                         </li>
                         <li class="nav-item">
                             <a class="nav-link" href="{{ url('/users') }}">Users</a>
                         </li>
-                    </ul>
-                    <!-- "About" dan gambar profil berada di sebelah kanan -->
-                    <ul class="navbar-nav right-link">
-                        <li class="nav-item">
-                            <a class="nav-link disabled" aria-disabled="true" href="{{ url('#') }}">About</a>
-                        </li>
-                        <li class="nav-item">
-                            <!-- Gambar profil -->
-                            <a href="{{ url('/profile') }}">
-                                <img src="../resources/img/LOGO_RUDAL 1.png" alt="Profile" class="profile-img">
-                            </a>
-                        </li>
-                    </ul>
+                    -->
                 </div>
             </div>
         </nav>
@@ -75,29 +68,28 @@
 
     <section class="mt-5">
         <div class="container">
-            <div class="card" style="width: 18rem;">
-                <img src="..." class="card-img-top" alt="...">
-                <div class="card-body">
-                    @foreach ($getActivityData as $data)
-                    <p class="fs-3">{{ $data->name }}</p>
-                    <p class="fs-6">{{ $data->description }}</p>
-                    <p class="fs-6">{{ $data->date }}</p>
-                    <button class="btn btn-outline-primary"
-                        onclick="saveTheDate('{{ $data->name }}', '{{ $data->date }}')">Save The Date</button>
-                    <h5 class="card-title">Card title</h5>
-                    <p class="card-text">Some quick example text to build on the card title and make up the bulk of the
-                        card's content.</p>
-                    <a href="#" class="btn btn-primary">Go somewhere</a>
-                    @endforeach
+            <div class="row">
+                <h2>DAFTAR KEGIATAN</h2>
+                @foreach ($getActivityData->sortBy('date') as $data) <!-- Mengurutkan berdasarkan tanggal -->
+                <div class="col-md-4 mb-4">
+                    <div class="card">
+                        <div class="card-body">
+                            <h5 class="card-title">{{ $data->name }}</h5>
+                            <p class="card-text">{{ $data->description }}</p>
+                            <p class="card-text"><small class="text-muted">{{ \Carbon\Carbon::parse($data->date)->format('d M Y') }}</small></p>
+                            <button class="btn btn-outline-primary"
+                                onclick="saveTheDate('{{ $data->name }}', '{{ $data->date }}')">Save The Date</button>
+                        </div>
+                    </div>
                 </div>
+                @endforeach
             </div>
         </div>
     </section>
 
     <script>
-        function saveTheDate(title, startDate, endDate) {
+        function saveTheDate(title, startDate) {
             const start = new Date(startDate);
-
             const event = {
                 title: title,
                 start: start,

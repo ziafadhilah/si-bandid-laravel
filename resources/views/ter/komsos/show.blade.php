@@ -1,6 +1,6 @@
 <div>
-    Detail {{ $haljol->sas }}
-    Detail {{ $haljol->tanggal }}
-    Detail {{ $haljol->dokumen }}
+    Detail {{ $komsos->sas }}
+    Detail {{ $komsos->tanggal }}
+    Detail {{ $komsos->dokumen }}
 </div>
  
