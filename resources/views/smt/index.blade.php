@@ -12,7 +12,7 @@
         <!-- Tabel Data Laporan -->
         <div class="table-responsive">
             <table class="table table-hover table-striped shadow-sm">
-                <thead class="table-dark">
+                <thead class="table-daA]rk">
                     <tr>
                         <th>No</th>
                         <th>Proses</th>

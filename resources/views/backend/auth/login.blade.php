@@ -81,7 +81,7 @@
         <form method="POST" action="{{ route('login') }}">
             @csrf
             <div class="form-group mb-3">
-                <label for="email" class="form-label">Email address</label>
+                <label for="email" class="form-label">Email</label>
                 <input type="email" class="form-control" id="email" name="email" placeholder="Enter your email"
                     required>
             </div>
@@ -90,13 +90,14 @@
                 <input type="password" class="form-control" id="password" name="password"
                     placeholder="Enter your password" required>
             </div>
-            <div class="d-flex justify-content-between mb-3">
+                <br>
+            <!-- <div class="d-flex justify-content-between mb-3">
                 <div class="form-check">
                     <input type="checkbox" class="form-check-input" id="remember" name="remember">
                     <label class="form-check-label" for="remember">Remember me</label>
-                </div>
+                </div> 
                 <a href="#" class="text-primary" onclick="return confirm('Waduh! Hanya orang-orang tertentu yang mampu mengakses halaman Register!')">Register</a>
-            </div>
+            </div> -->
             <button type="submit" class="btn btn-primary">Login</button>
         </form>
     </div>

@@ -37,7 +37,7 @@
                         </td>
                         <td class="text-center">
                             <a href="/ter/komsos/edit/{{ $get->id }}" class="btn btn-outline-success btn-sm mx-1">
-                                <i class="fas fa-pencil-alt"></i>
+                                 <i class="fas fa-pencil-alt"></i>
                             </a>
                             <a href="/ter/komsos/show/{{ $get->id }}" class="btn btn-outline-primary btn-sm mx-1">
                                 <i class="fas fa-eye"></i>
