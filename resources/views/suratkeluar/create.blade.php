@@ -12,14 +12,14 @@
             <div class="mb-3 row">
                 <label class="col-lg-2 col-form-label">Nomor Surat</label>
                 <div class="col-lg-4">
-                    <input type="text" class="form-control" name="no_surat" placeholder="EX: Lomba 17 Agustus"
+                    <input type="text" class="form-control" name="no_surat" placeholder="EX: R/1234/X/2024"
                         autocomplete="off">
                 </div>
             </div>
             <div class="mb-3 row">
                 <label class="col-lg-2 col-form-label">Tujuan Surat</label>
                 <div class="col-lg-4">
-                    <input type="text" cl?ass="form-control" name="tujuan_surat" autocomplete="off">
+                    <input type="text" class="form-control" name="tujuan_surat" autocomplete="off">
                 </div>
             </div>
             <div class="mb-3 row">
@@ -36,5 +36,6 @@
             </div>
         </div>
         <button type="submit" class="btn btn-outline-success">Save</button>
+        <a href="{{ url()->previous() }}" class="btn btn-outline-secondary">Cancel</a>
     </form>
 @endsection

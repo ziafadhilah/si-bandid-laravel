@@ -1,5 +1,5 @@
 @extends('layouts.main')
-
+ 
 @section('content')
     <div class="container mt-5">
         <h1 class="fs-1">Halaman Karya Bakti</h1>
@@ -35,13 +35,13 @@
                             @endif
                         </td>
                         <td class="text-center">
-                            <a href="/ter/karyabakti/edit/{{ $get->id }}" class="btn btn-outline-success btn-sm mx-1">
+                            <a href="{{ route('ter.karyabakti.edit', $get->id) }}" class="btn btn-outline-success btn-sm mx-1">
                                 <i class="fas fa-pencil-alt"></i>
                             </a>
-                            <a href="/ter/karyabakti/show/{{ $get->id }}" class="btn btn-outline-primary btn-sm mx-1">
+                            <a href="{{ route('ter.karyabakti.show', $get->id) }}" class="btn btn-outline-primary btn-sm mx-1">
                                 <i class="fas fa-eye"></i>
                             </a>
-                            <form action="{{ route('karyabakti.destroy', $get->id) }}" method="POST" class="d-inline">
+                            <form action="{{ route('ter.karyabakti.destroy', $get->id) }}" method="POST" class="d-inline">
                                 @csrf
                                 @method('DELETE')
                                 <button type="submit" class="btn btn-outline-warning btn-sm mx-1" onclick="return confirm('Anda yakin ingin menghapus?')">

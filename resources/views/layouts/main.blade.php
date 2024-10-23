@@ -4,7 +4,7 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>SI-BANDID</title>
+    <title>SI-INTEL</title>
 
     {{-- Bootstrap --}}
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet"
@@ -84,7 +84,7 @@
         <div class="position-sticky">
             <div class="d-flex justify-content-center me-md-auto pt-3 pb-3">
                 <a href="/" class="text-decoration-none navbar-brand">
-                    <span class="fs-3 text-white">PAMUJI</span>
+                    <span class="fs-3 text-white">STAF INTEL</span>
                 </a>
             </div>
             <ul class="nav nav-pills flex-column mb-auto">
@@ -105,7 +105,7 @@
                             <li><a href="{{ url('/renpam') }}" class="nav-link ms-3">RENPAM</a></li>
                             <li><a href="{{ url('/bangsus') }}" class="nav-link ms-3">BANGSUS</a></li>
                             <li><a href="{{ url('/litpers') }}" class="nav-link ms-3">LITPERS</a></li>
-                            <li><a href="{{ url('/pengajuan') }}" class="nav-link ms-3">NODIS/PENGAJUAN</a></li>
+                            <li><a href="{{ url('/pengajuan') }}" class="nav-link ms-3">PENGAJUAN</a></li>
                         </ul>
                     </div>
                 </li>
@@ -144,7 +144,7 @@
     <!-- Offcanvas untuk tampilan mobile -->
     <div class="offcanvas offcanvas-start" tabindex="-1" id="offcanvasExample" aria-labelledby="offcanvasExampleLabel">
         <div class="offcanvas-header">
-            <h5 class="offcanvas-title" id="offcanvasExampleLabel">PAMUJI</h5>
+            <h5 class="offcanvas-title" id="offcanvasExampleLabel">CLANDESTINE</h5>
             <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>
         </div>
         <div class="offcanvas-body">
@@ -166,7 +166,7 @@
                             <li><a href="{{ url('/renpam') }}" class="nav-link ms-3">RENPAM</a></li>
                             <li><a href="{{ url('/bangsus') }}" class="nav-link ms-3">BANGSUS</a></li>
                             <li><a href="{{ url('/litpers') }}" class="nav-link ms-3">LITPERS</a></li>
-                             <li><a href="{{ url('/pengajuan') }}" class="nav-link ms-3">NODIS/PENGAJUAN</a></li>
+                            <li><a href="{{ url('/pengajuan') }}" class="nav-link ms-3">PENGAJUAN</a></li>
                         </ul>
                     </div>
                 </li>

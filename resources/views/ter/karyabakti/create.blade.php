@@ -1,6 +1,6 @@
 @extends('layouts/main')
 @section('content')
-    <form action="{{ route('karyabakti.store') }}" method="POST" enctype="multipart/form-data">
+    <form action="{{ route('ter.karyabakti.store') }}" method="POST" enctype="multipart/form-data">
         @csrf
         <div class="card-body mt-4">
             <div class="mb-3 row">

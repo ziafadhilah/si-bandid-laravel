@@ -1,3 +1,3 @@
 <div>
-    Detail Nama {{ $haljol->name }}
+    Detail Nama {{ $activity->name }}
 </div>

@@ -37,7 +37,7 @@ class KomsosController extends Controller
         $request->validate([
             'sas' => 'required|string|max:255',
             'tanggal' => 'required|date',
-            'dokumen' => 'required|file|mimes:pdf,doc,docx|max:2048', // Validasi dokumen harus ada
+            'dokumen' => 'required|file|mimes:pdf,doc,docx|max:4096', // Validasi dokumen harus ada
         ]);
 
         DB::beginTransaction();
@@ -95,7 +95,7 @@ class KomsosController extends Controller
     {
         $getData = Komsos::findOrFail($id);
         return view('ter.komsos.edit', [
-            'komsoss' => $getData,
+            'komsos' => $getData,
         ]);
     }
 
@@ -107,39 +107,38 @@ class KomsosController extends Controller
         $request->validate([
             'sas' => 'required|string|max:255',
             'tanggal' => 'required|date',
-            'dokumen' => 'required|file|mimes:pdf,doc,docx|max:2048', // Validasi dokumen harus ada
+            'dokumen' => 'nullable|file|mimes:pdf,doc,docx|max:2048',
         ]);
-        
+    
         try {
             $getData = Komsos::findOrFail($id);
             $getData->sas = $request->sas;
             $getData->tanggal = $request->tanggal;
-            $getData->dokumen = $request->dokumen;
-           
+    
             if ($request->hasFile('dokumen')) {
                 // Hapus file lama jika ada
                 if ($getData->dokumen) {
                     Storage::delete('public/dokumen/' . $getData->dokumen);
                 }
-
+    
                 $file = $request->file('dokumen');
                 $filename = time() . '_' . $file->getClientOriginalName();
                 $path = $file->storeAs('public/dokumen', $filename);
                 $getData->dokumen = $filename;
             }
+    
             $getData->save();
-            return redirect('/ter/komsos')->with('status', 'Berhasil di ubah');
+            return redirect()->route('ter.komsos.index')->with('status', 'Berhasil di ubah');
         } catch (Exception $e) {
-            return response()->json(
-                [
-                    'message' => 'Internal error',
-                    'code' => 500,
-                    'error' => true,
-                    'errors' => $e,
-                ],
-            );
+            return response()->json([
+                'message' => 'Internal error',
+                'code' => 500,
+                'error' => true,
+                'errors' => $e,
+            ]);
         }
     }
+    
 
     /**
      * Remove the specified resource from storage.
@@ -164,29 +163,25 @@ class KomsosController extends Controller
         }
     }*/
     public function destroy($id)
-{
-    try {
-        // Temukan data berdasarkan ID
-        $getData = Komsos::findOrFail($id);
-
-        // Hapus file dokumen terkait jika ada
-        if ($getData->dokumen) {
-            Storage::delete('public/dokumen/' . $getData->dokumen);
+    {
+        try {
+            $getData = Komsos::findOrFail($id);
+    
+            if ($getData->dokumen) {
+                Storage::delete('public/dokumen/' . $getData->dokumen);
+            }
+    
+            $getData->delete();
+            return redirect()->route('ter.komsos.index')->with('status', 'Data berhasil dihapus');
+        } catch (Exception $e) {
+            return response()->json([
+                'message' => 'Internal error',
+                'code' => 500,
+                'error' => true,
+                'errors' => $e,
+            ]);
         }
-
-        // Hapus data dari database
-        $getData->delete();
-
-        // Redirect dengan pesan sukses
-        return redirect('/ter/komsos')->with('status', 'Data berhasil dihapus');
-    } catch (Exception $e) {
-        return response()->json([
-            'message' => 'Internal error',
-            'code' => 500,
-            'error' => true,
-            'errors' => $e,
-        ]);
     }
-}
+    
 
 }

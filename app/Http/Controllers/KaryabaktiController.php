@@ -33,29 +33,32 @@ class KaryabaktiController extends Controller
      */
     public function store(Request $request)
     {
-        // Validasi
+        // Validasi data
         $request->validate([
-            'sas' => 'required',
+            'sas' => 'required|string|max:255',
             'tanggal' => 'required|date',
-            'dokumen' => 'required|mimes:pdf,doc,docx,xls,xlsx|max:2048',
+            'dokumen' => 'required|file|mimes:pdf,doc,docx|max:2048', // Validasi dokumen
         ]);
-
-        // Menyimpan file
+    
+        // Menyimpan file jika ada file yang diupload
         if ($request->hasFile('dokumen')) {
+            // Simpan file dengan nama unik
             $fileName = time() . '_' . $request->file('dokumen')->getClientOriginalName();
             $filePath = $request->file('dokumen')->storeAs('uploads', $fileName, 'public');
-
-            // Simpan path ke database
-            $karyabaktiI = new Karyabakti();
-            $karyabaktiI->sas = $request->input('sas');
-            $karyabaktiI->tanggal = $request->input('tanggal');
-            $karyabaktiI->dokumen = $filePath;
-            $karyabaktiI->save();
         }
-
-        return redirect()->back()->with('success', 'File berhasil diunggah');
+    
+        // Simpan data ke database
+        $karyabakti = new Karyabakti();
+        $karyabakti->sas = $request->input('sas');
+        $karyabakti->tanggal = $request->input('tanggal');
+        $karyabakti->dokumen = $filePath ?? null;  // Simpan path dokumen jika ada
+        $karyabakti->save();
+    
+        // Redirect ke halaman index dengan pesan sukses
+        return redirect()->route('ter.karyabakti.index')->with('success', 'Data berhasil ditambahkan');
     }
-
+    
+ 
     /**
      * Display the specified resource.
      */
@@ -84,43 +87,48 @@ class KaryabaktiController extends Controller
      */
     public function update(Request $request, $id)
     {
+        // Validasi input
         $request->validate([
             'sas' => 'required|string|max:255',
             'tanggal' => 'required|date',
-            'dokumen' => 'required|file|mimes:pdf,doc,docx|max:2048',
+            'dokumen' => 'nullable|file|mimes:pdf,doc,docx|max:2048', // Dokumen tidak harus diisi
         ]);
-
+    
         try {
+            // Cari data yang akan diupdate
             $getData = Karyabakti::findOrFail($id);
             $getData->sas = $request->sas;
             $getData->tanggal = $request->tanggal;
-            $getData->dokumen = $request->dokumen;
-
+    
+            // Periksa apakah ada file yang diunggah
             if ($request->hasFile('dokumen')) {
                 // Hapus file lama jika ada
                 if ($getData->dokumen) {
                     Storage::delete('public/dokumen/' . $getData->dokumen);
                 }
-
+    
+                // Simpan file baru
                 $file = $request->file('dokumen');
                 $filename = time() . '_' . $file->getClientOriginalName();
                 $path = $file->storeAs('public/dokumen', $filename);
                 $getData->dokumen = $filename;
             }
+    
+            // Simpan perubahan
             $getData->save();
-            return redirect('/ter/karyabakti')->with('status', 'Berhasil di ubah');
+    
+            // Redirect ke halaman index dengan pesan sukses
+            return redirect()->route('ter.karyabakti.index')->with('status', 'Berhasil di ubah');
         } catch (Exception $e) {
-            return response()->json(
-                [
-                    'message' => 'Internal error',
-                    'code' => 500,
-                    'error' => true,
-                    'errors' => $e,
-                ],
-            );
+            return response()->json([
+                'message' => 'Internal error',
+                'code' => 500,
+                'error' => true,
+                'errors' => $e,
+            ]);
         }
     }
-
+    
     /**
      * Remove the specified resource from storage.
      */

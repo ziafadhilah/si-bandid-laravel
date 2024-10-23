@@ -4,7 +4,7 @@
     <div class="container mt-5">
         <!-- Judul dan Tombol Tambah -->
         <div class="d-flex justify-content-between align-items-center mb-4">
-            <h1 class="fs-1">Penelitian Personel (LITPERS)</h1>
+            <h1 class="fs-1">Penelitian Personel</h1>
             <a href="{{ url('litpers/create') }}" class="btn btn-success">
                 <i class="fas fa-plus"></i> Tambah Penelitian Personel
             </a>
@@ -41,17 +41,17 @@
                             </td>
                             <td class="text-center">
                                 <!-- Tombol Edit -->
-                                <a href="/litpers/edit/{{ $data->id }}" class="btn btn-outline-success btn-sm mx-1">
+                                <a href="{{ route('litpers.edit', $data->id) }}" class="btn btn-outline-success btn-sm mx-1">
                                     <i class="fas fa-pencil-alt"></i>
                                 </a>
 
                                 <!-- Tombol Lihat -->
-                                <a href="/litpers/show/{{ $data->id }}" class="btn btn-outline-primary btn-sm mx-1">
+                                <a href="{{ route('litpers.show', $data->id) }}" class="btn btn-outline-primary btn-sm mx-1">
                                     <i class="fas fa-eye"></i>
                                 </a>
 
                                 <!-- Tombol Hapus -->
-                                <form action="/litpers/{{ $data->id }}" method="post" class="d-inline">
+                                <form action="{{ route('litpers.destroy', $data->id) }}" method="post" class="d-inline">
                                     @method('delete')
                                     @csrf
                                     <button type="submit" class="btn btn-outline-warning btn-sm mx-1"

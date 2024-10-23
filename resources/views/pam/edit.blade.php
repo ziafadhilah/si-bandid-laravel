@@ -1,6 +1,6 @@
 @extends('layouts/main')
 @section('content')
-    <form action="/pam/{{ $pam->id }}" method="POST" enctype="multipart/form-data">
+    <form action="{{ route('pam.update', $pam->id) }}" method="POST" enctype="multipart/form-data">
     @method('patch')    
     @csrf
         <div class="card-body mt-4">
@@ -33,6 +33,7 @@
                 </div>
             </div>
         </div>
-        <button type="submit" class="btn btn-outline-success">Save</button>
+        <button type="submit" class="btn btn-outline-success">Update</button>
+        <a href="{{ url()->previous() }}" class="btn btn-outline-secondary">Cancel</a>
     </form>
 @endsection

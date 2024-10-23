@@ -39,17 +39,17 @@
                             </td>
                             <td class="text-center">
                                 <!-- Tombol Edit -->
-                                <a href="/bangsus/edit/{{ $data->id }}" class="btn btn-outline-success btn-sm">
+                                <a href="{{ route('bangsus.edit', $data->id) }}" class="btn btn-outline-success btn-sm">
                                     <i class="fas fa-pencil-alt"></i>
                                 </a>
 
                                 <!-- Tombol View -->
-                                <a href="/bangsus/show/{{ $data->id }}" class="btn btn-outline-primary btn-sm">
+                                <a href="{{ route('bangsus.show', $data->id) }}" class="btn btn-outline-primary btn-sm">
                                     <i class="fas fa-eye"></i>
                                 </a>
 
                                 <!-- Tombol Hapus -->
-                                <form action="/bangsus/{{ $data->id }}" method="post" class="d-inline">
+                                <form action="{{ route('bangsus.destroy', $data->id) }}" method="post" class="d-inline">
                                     @method('delete')
                                     @csrf
                                     <button type="submit" class="btn btn-outline-warning btn-sm"

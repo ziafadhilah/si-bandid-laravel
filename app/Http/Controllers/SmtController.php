@@ -6,6 +6,7 @@ use App\Models\Smt;
 use Exception;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Storage;
 
 class SmtController extends Controller
 {
@@ -33,37 +34,33 @@ class SmtController extends Controller
      */
     public function store(Request $request)
     {
-        // dd($request);
         DB::beginTransaction();
 
         try {
             $smtI = new Smt();
             $smtI->proses = $request->proses;
             $smtI->no_surat = $request->no_surat;
-             // Proses upload file
-             if ($request->hasFile('dokumen')) {
+
+            // Proses upload file
+            if ($request->hasFile('dokumen')) {
                 $file = $request->file('dokumen');
                 $filename = time() . '_' . $file->getClientOriginalName();
                 $path = $file->storeAs('public/dokumen', $filename);
                 $smtI->dokumen = $filename;
             }
+            
             $smtI->save();
-
             DB::commit();
-            return redirect('/smt')->with(
-                'status',
-                'Data berhasil ditambahkan'
-            );
+
+            return redirect('/smt')->with('status', 'Data berhasil ditambahkan');
         } catch (Exception $e) {
             DB::rollback();
-            return response()->json(
-                [
-                    'message' => 'Internal error',
-                    'code' => 500,
-                    'error' => true,
-                    'errors' => $e,
-                ],
-            );
+            return response()->json([
+                'message' => 'Internal error',
+                'code' => 500,
+                'error' => true,
+                'errors' => $e,
+            ]);
         }
     }
 
@@ -99,42 +96,58 @@ class SmtController extends Controller
             $getData = Smt::findOrFail($id);
             $getData->proses = $request->proses;
             $getData->no_surat = $request->no_surat;
-            $getData->dokumen = $request->dokumen;
+
+            // Cek apakah ada file baru yang diunggah
+            if ($request->hasFile('dokumen')) {
+                // Hapus file lama jika ada
+                if ($getData->dokumen) {
+                    Storage::delete('public/dokumen/' . $getData->dokumen);
+                }
+
+                // Upload file baru
+                $file = $request->file('dokumen');
+                $filename = time() . '_' . $file->getClientOriginalName();
+                $path = $file->storeAs('public/dokumen', $filename);
+                $getData->dokumen = $filename;
+            }
+
             $getData->save();
             return redirect('/smt')->with('status', 'Berhasil di ubah');
         } catch (Exception $e) {
-            return response()->json(
-                [
-                    'message' => 'Internal error',
-                    'code' => 500,
-                    'error' => true,
-                    'errors' => $e,
-                ],
-            );
+            return response()->json([
+                'message' => 'Internal error',
+                'code' => 500,
+                'error' => true,
+                'errors' => $e,
+            ]);
         }
     }
 
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(Request $request)
+    public function destroy($id)
     {
         try {
-            Smt::destroy($request->id);
-            return redirect('/smt')->with(
-                'status',
-                'Data berhasil di hapus'
-            );
+            $getData = Smt::findOrFail($id);
+
+            // Hapus file terkait jika ada
+            if ($getData->dokumen) {
+                Storage::delete('public/dokumen/' . $getData->dokumen);
+            }
+
+            // Hapus data dari database
+            $getData->delete();
+            
+            return redirect('/smt')->with('status', 'Data berhasil dihapus');
         } catch (Exception $e) {
-            return response()->json(
-                [
-                    'message' => 'Internal error',
-                    'code' => 500,
-                    'error' => true,
-                    'errors' => $e,
-                ],
-            );
+            return response()->json([
+                'message' => 'Internal error',
+                'code' => 500,
+                'error' => true,
+                'errors' => $e,
+            ]);
         }
     }
 }
-
+?>

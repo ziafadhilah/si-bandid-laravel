@@ -1,11 +1,11 @@
 <?php
-
 namespace App\Http\Controllers;
 
-use App\Models\Litpers; 
+use App\Models\Litpers;
 use Exception;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Storage;
 
 class LitpersController extends Controller
 {
@@ -40,30 +40,27 @@ class LitpersController extends Controller
             $litpersI->name = $request->name;
             $litpersI->pkt = $request->pkt;
             $litpersI->hasil = $request->hasil;
-             // Proses upload file
-             if ($request->hasFile('dokumen')) {
+
+            // Proses upload file
+            if ($request->hasFile('dokumen')) {
                 $file = $request->file('dokumen');
                 $filename = time() . '_' . $file->getClientOriginalName();
                 $path = $file->storeAs('public/dokumen', $filename);
                 $litpersI->dokumen = $filename;
             }
-            $litpersI->save();
 
+            $litpersI->save();
             DB::commit();
-            return redirect('/litpers')->with(
-                'status',
-                'Data berhasil ditambahkan'
-            );
+
+            return redirect('/litpers')->with('status', 'Data berhasil ditambahkan');
         } catch (Exception $e) {
             DB::rollback();
-            return response()->json(
-                [
-                    'message' => 'Internal error',
-                    'code' => 500,
-                    'error' => true,
-                    'errors' => $e,
-                ],
-            );
+            return response()->json([
+                'message' => 'Internal error',
+                'code' => 500,
+                'error' => true,
+                'errors' => $e,
+            ]);
         }
     }
 
@@ -100,42 +97,58 @@ class LitpersController extends Controller
             $getData->name = $request->name;
             $getData->pkt = $request->pkt;
             $getData->hasil = $request->hasil;
-            $getData->dokumen = $request->dokumen;
+
+            // Cek apakah ada file baru yang diunggah
+            if ($request->hasFile('dokumen')) {
+                // Hapus file lama jika ada
+                if ($getData->dokumen) {
+                    Storage::delete('public/dokumen/' . $getData->dokumen);
+                }
+
+                // Upload file baru
+                $file = $request->file('dokumen');
+                $filename = time() . '_' . $file->getClientOriginalName();
+                $path = $file->storeAs('public/dokumen', $filename);
+                $getData->dokumen = $filename;
+            }
+
             $getData->save();
             return redirect('/litpers')->with('status', 'Berhasil di ubah');
         } catch (Exception $e) {
-            return response()->json(
-                [
-                    'message' => 'Internal error',
-                    'code' => 500,
-                    'error' => true,
-                    'errors' => $e,
-                ],
-            );
+            return response()->json([
+                'message' => 'Internal error',
+                'code' => 500,
+                'error' => true,
+                'errors' => $e,
+            ]);
         }
     }
 
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(Request $request)
+    public function destroy($id)
     {
         try {
-            Litpers::destroy($request->id);
-            return redirect('/litpers')->with(
-                'status',
-                'Data berhasil di hapus'
-            );
+            $getData = Litpers::findOrFail($id);
+
+            // Hapus file terkait jika ada
+            if ($getData->dokumen) {
+                Storage::delete('public/dokumen/' . $getData->dokumen);
+            }
+
+            // Hapus data dari database
+            $getData->delete();
+            
+            return redirect('/litpers')->with('status', 'Data berhasil dihapus');
         } catch (Exception $e) {
-            return response()->json(
-                [
-                    'message' => 'Internal error',
-                    'code' => 500,
-                    'error' => true,
-                    'errors' => $e,
-                ],
-            );
+            return response()->json([
+                'message' => 'Internal error',
+                'code' => 500,
+                'error' => true,
+                'errors' => $e,
+            ]);
         }
     }
 }
-
+?>

@@ -1,11 +1,11 @@
 <?php
-
 namespace App\Http\Controllers;
 
 use App\Models\Pengajuan;
 use Exception;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Storage;
 
 class PengajuanController extends Controller
 {
@@ -40,30 +40,27 @@ class PengajuanController extends Controller
             $pengajuanI->jenis_pengajuan = $request->jenis_pengajuan;
             $pengajuanI->tujuan = $request->tujuan;
             $pengajuanI->no_surat = $request->no_surat;
-             // Proses upload file
-             if ($request->hasFile('dokumen')) {
+
+            // Proses upload file
+            if ($request->hasFile('dokumen')) {
                 $file = $request->file('dokumen');
                 $filename = time() . '_' . $file->getClientOriginalName();
                 $path = $file->storeAs('public/dokumen', $filename);
                 $pengajuanI->dokumen = $filename;
             }
-            $pengajuanI->save();
 
+            $pengajuanI->save();
             DB::commit();
-            return redirect('/pengajuan')->with(
-                'status',
-                'Data berhasil ditambahkan'
-            );
+
+            return redirect('/pengajuan')->with('status', 'Data berhasil ditambahkan');
         } catch (Exception $e) {
             DB::rollback();
-            return response()->json(
-                [
-                    'message' => 'Internal error',
-                    'code' => 500,
-                    'error' => true,
-                    'errors' => $e,
-                ],
-            );
+            return response()->json([
+                'message' => 'Internal error',
+                'code' => 500,
+                'error' => true,
+                'errors' => $e,
+            ]);
         }
     }
 
@@ -100,42 +97,58 @@ class PengajuanController extends Controller
             $getData->jenis_pengajuan = $request->jenis_pengajuan;
             $getData->tujuan = $request->tujuan;
             $getData->no_surat = $request->no_surat;
-            $getData->dokumen = $request->dokumen;
+
+            // Cek apakah ada file baru yang diunggah
+            if ($request->hasFile('dokumen')) {
+                // Hapus file lama jika ada
+                if ($getData->dokumen) {
+                    Storage::delete('public/dokumen/' . $getData->dokumen);
+                }
+
+                // Upload file baru
+                $file = $request->file('dokumen');
+                $filename = time() . '_' . $file->getClientOriginalName();
+                $path = $file->storeAs('public/dokumen', $filename);
+                $getData->dokumen = $filename;
+            }
+
             $getData->save();
-            return redirect('/pengajuan')->with('status', 'Berhasil di ubah');
+            return redirect('/pengajuan')->with('status', 'Data berhasil di ubah');
         } catch (Exception $e) {
-            return response()->json(
-                [
-                    'message' => 'Internal error',
-                    'code' => 500,
-                    'error' => true,
-                    'errors' => $e,
-                ],
-            );
+            return response()->json([
+                'message' => 'Internal error',
+                'code' => 500,
+                'error' => true,
+                'errors' => $e,
+            ]);
         }
     }
 
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(Request $request)
+    public function destroy($id)
     {
         try {
-            Pengajuan::destroy($request->id);
-            return redirect('/pengajuan')->with(
-                'status',
-                'Data berhasil di hapus'
-            );
+            $getData = Pengajuan::findOrFail($id);
+
+            // Hapus file dokumen terkait jika ada
+            if ($getData->dokumen) {
+                Storage::delete('public/dokumen/' . $getData->dokumen);
+            }
+
+            // Hapus data dari database
+            $getData->delete();
+
+            return redirect('/pengajuan')->with('status', 'Data berhasil dihapus');
         } catch (Exception $e) {
-            return response()->json(
-                [
-                    'message' => 'Internal error',
-                    'code' => 500,
-                    'error' => true,
-                    'errors' => $e,
-                ],
-            );
+            return response()->json([
+                'message' => 'Internal error',
+                'code' => 500,
+                'error' => true,
+                'errors' => $e,
+            ]);
         }
     }
 }
-
+?>

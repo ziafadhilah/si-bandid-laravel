@@ -12,7 +12,7 @@
             <div class="mb-3 row">
                 <label class="col-lg-2 col-form-label">Pengamanan</label>
                 <div class="col-lg-4">
-                    <input type="text" class="form-control" name="giat_pam" placeholder="EX: Lomba 17 Agustus"
+                    <input type="text" class="form-control" name="giat_pam" placeholder="Deskripsi"
                         autocomplete="off">
                 </div>
             </div>
@@ -24,5 +24,6 @@
             </div>
         </div>
         <button type="submit" class="btn btn-outline-success">Save</button>
+        <a href="{{ url()->previous() }}" class="btn btn-outline-secondary">Cancel</a>
     </form>
 @endsection

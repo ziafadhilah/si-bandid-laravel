@@ -1,5 +1,5 @@
 @extends('layouts.main')
-
+ 
 @section('content')
     <div class="container mt-5">
         <div class="d-flex justify-content-between align-items-center mb-4">
@@ -42,17 +42,17 @@
                             </td>
                             <td class="text-center">
                                 <!-- Tombol Edit -->
-                                <a href="/suratkeluar/edit/{{ $data->id }}" class="btn btn-outline-success btn-sm mx-1">
+                                <a href="{{ route('suratkeluar.edit', $data->id) }}" class="btn btn-outline-success btn-sm mx-1">
                                     <i class="fas fa-pencil-alt"></i>
                                 </a>
 
                                 <!-- Tombol View -->
-                                <a href="/suratkeluar/show/{{ $data->id }}" class="btn btn-outline-primary btn-sm mx-1">
+                                <a href="{{ route('suratkeluar.show', $data->id) }}" class="btn btn-outline-primary btn-sm mx-1">
                                     <i class="fas fa-eye"></i>
                                 </a>
 
                                 <!-- Tombol Hapus -->
-                                <form action="/suratkeluar/{{ $data->id }}" method="post" class="d-inline">
+                                <form action="{{ route('suratkeluar.destroy', $data->id) }}" method="post" class="d-inline">
                                     @method('delete')
                                     @csrf
                                     <button type="submit" class="btn btn-outline-warning btn-sm mx-1"

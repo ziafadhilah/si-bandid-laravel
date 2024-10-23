@@ -12,16 +12,13 @@ class ActivityController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index()
+
+     
+    public function index(Request $request) // Tambahkan Request $request
     {
-        $activities = Activity::all();
-        return view('activity.index', [
-            'activities' => $activities,
-        ]);
-        
         // Mencari kegiatan berdasarkan search query
         $search = $request->input('search');
-
+        
         if ($search) {
             $activities = Activity::where('name', 'like', '%' . $search . '%')
                 ->orWhere('description', 'like', '%' . $search . '%')
@@ -31,7 +28,7 @@ class ActivityController extends Controller
             $activities = Activity::orderBy('date', 'asc')->get();
         }
 
-        return view('activity.index', ['activities' => $activities]);
+        return view('activity.index', ['activities' => $activities]); // Pindahkan return ke sini
     }
 
     /**
@@ -53,32 +50,34 @@ class ActivityController extends Controller
             $activity->name = $request->name;
             $activity->description = $request->description;
             $activity->date = $request->date;
+            $activity->starttime = $request->starttime;
+            $activity->endtime = $request->endtime;
+            $activity->enddate = $request->enddate;
             $activity->save();
 
             DB::commit();
-            return redirect('/activity')->with(
-                'status',
-                'Data berhasil ditambahkan'
-            );
+            return redirect('/activity')->with('status', 'Data berhasil ditambahkan');
         } catch (Exception $e) {
             DB::rollback();
-            return response()->json(
-                [
-                    'message' => 'Internal error',
-                    'code' => 500,
-                    'error' => true,
-                    'errors' => $e,
-                ],
-            );
+            return response()->json([
+                'message' => 'Internal error',
+                'code' => 500,
+                'error' => true,
+                'errors' => $e,
+            ]);
         }
     }
 
     /**
      * Display the specified resource.
      */
-    public function show(Activity $activity)
+    public function show($id)
     {
-        //
+        $activity = Activity::find($id);
+        if (!$activity) {
+            return redirect('/activity')->with('error', 'Activity not found.');
+        }
+        return view('activity.show', compact('activity')); // Sesuaikan nama view
     }
 
     /**
@@ -86,10 +85,11 @@ class ActivityController extends Controller
      */
     public function edit($id)
     {
-        $activities = Activity::findOrFail($id);
-        return view('activity.edit', [
-            'activities' => $activities,
-        ]);
+        $activity = Activity::find($id);
+        if (!$activity) {
+            return redirect('/activity')->with('error', 'Activity not found.');
+        }
+        return view('activity.edit', compact('activity')); // Sesuaikan nama view
     }
 
     /**
@@ -98,44 +98,35 @@ class ActivityController extends Controller
     public function update(Request $request, $id)
     {
         try {
-            $activities = Activity::findOrFail($id);
-            $activities->name = $request->name;
-            $activities->description = $request->description;
-            $activities->date = $request->date;
-            $activities->save();
-            return redirect('/activity')->with('status', 'Berhasil di ubah');
+            $activity = Activity::findOrFail($id);
+            $activity->name = $request->name;
+            $activity->description = $request->description;
+            $activity->date = $request->date;
+            $activity->starttime = $request->starttime;
+            $activity->endtime = $request->endtime;
+            $activity->enddate = $request->enddate;
+            $activity->save();
+            return redirect('/activity')->with('status', 'Berhasil diubah');
         } catch (Exception $e) {
-            return response()->json(
-                [
-                    'message' => 'Internal error',
-                    'code' => 500,
-                    'error' => true,
-                    'errors' => $e,
-                ],
-            );
+            return response()->json([
+                'message' => 'Internal error',
+                'code' => 500,
+                'error' => true,
+                'errors' => $e,
+            ]);
         }
     }
 
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(Request $request)
+    public function destroy($id)
     {
-        try {
-            Activity::destroy($request->id);
-            return redirect('/activity')->with(
-                'status',
-                'Data berhasil di hapus'
-            );
-        } catch (Exception $e) {
-            return response()->json(
-                [
-                    'message' => 'Internal error',
-                    'code' => 500,
-                    'error' => true,
-                    'errors' => $e,
-                ],
-            );
+        $activity = Activity::find($id);
+        if (!$activity) {
+            return redirect('/activity')->with('error', 'Activity not found.');
         }
+        $activity->delete();
+        return redirect('/activity')->with('success', 'Activity deleted successfully');
     }
 }

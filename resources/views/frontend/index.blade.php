@@ -4,7 +4,7 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>SI-BANDID</title>
+    <title>CLANDESTINE</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet"
         integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
     <style>
@@ -38,7 +38,7 @@
     <header>
         <nav class="navbar navbar-expand-lg bg-body-tertiary">
             <div class="container">
-                <a class="navbar-brand" href="#">PAMUJI</a>
+                <a class="navbar-brand" href="#">STAF INTEL</a>
                 <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
                     aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
                     <span class="navbar-toggler-icon"></span>
@@ -46,7 +46,19 @@
                 <div class="collapse navbar-collapse" id="navbarNav">
                     <ul class="navbar-nav me-auto mb-2 mb-lg-0">
                         <li class="nav-item">
-                            <a class="nav-link active" href="{{ url('/activity') }}">Activity</a>
+                            <a class="nav-link disabled" href="{{ url('#') }}">DAFTAR KEGIATAN</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link disabled" href="{{ url('#') }}">PAM</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link disabled" href="{{ url('#') }}">TER</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link disabled" href="{{ url('#') }}">LOGIN</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link disabled" href="{{ url('#') }}">REGISTER</a>
                         </li>
                     </ul>
                     <ul class="navbar-nav right-link">
@@ -54,13 +66,6 @@
                             <a class="nav-link disabled" href="{{ url('#') }}">Copyright © Yon Arhanud 7/ABC</a>
                         </li>
                     </ul>
-                       <!-- <li class="nav-item">
-                            <a class="nav-link" href="{{ url('/profile') }}">Profile</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link" href="{{ url('/users') }}">Users</a>
-                        </li>
-                    -->
                 </div>
             </div>
         </nav>
@@ -76,9 +81,16 @@
                         <div class="card-body">
                             <h5 class="card-title">{{ $data->name }}</h5>
                             <p class="card-text">{{ $data->description }}</p>
-                            <p class="card-text"><small class="text-muted">{{ \Carbon\Carbon::parse($data->date)->format('d M Y') }}</small></p>
+                            <p class="card-text">
+                                <small class="text-muted">
+                                    {{ \Carbon\Carbon::parse($data->date)->format('d M Y') }} - 
+                                    {{ \Carbon\Carbon::parse($data->enddate)->format('d M Y') }}
+                                </small>
+                            </p>
                             <button class="btn btn-outline-primary"
-                                onclick="saveTheDate('{{ $data->name }}', '{{ $data->date }}')">Save The Date</button>
+                                onclick="saveTheDate('{{ $data->name }}', '{{ $data->date }}', '{{ $data->enddate }}')">
+                                Save The Date
+                            </button>
                         </div>
                     </div>
                 </div>
@@ -88,11 +100,13 @@
     </section>
 
     <script>
-        function saveTheDate(title, startDate) {
+        function saveTheDate(title, startDate, endDate) {
             const start = new Date(startDate);
+            const end = new Date(endDate);
             const event = {
                 title: title,
                 start: start,
+                end: end,  // Menggunakan tanggal selesai yang benar
                 description: 'Save the date for this event!',
             };
 
@@ -101,7 +115,7 @@
             };
 
             const url =
-                `https://calendar.google.com/calendar/r/eventedit?text=${encodeURIComponent(event.title)}&dates=${formatDate(start)}/&details=${encodeURIComponent(event.description)}`;
+                `https://calendar.google.com/calendar/r/eventedit?text=${encodeURIComponent(event.title)}&dates=${formatDate(start)}/${formatDate(end)}&details=${encodeURIComponent(event.description)};`;
 
             window.open(url, '_blank');
         }

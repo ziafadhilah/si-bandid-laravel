@@ -11,7 +11,8 @@
                     <th>No</th>
                     <th>Judul Kegiatan</th>
                     <th>Deskripsi Kegiatan</th>
-                    <th>Tanggal Kegiatan</th>
+                    <th>Mulai Kegiatan</th>
+                    <th>Selesai Kegiatan</th>
                     <th class="text-center">Action</th>
                 </tr>
             </thead>
@@ -21,15 +22,16 @@
                         <td>{{ $loop->iteration }}</td>
                         <td>{{ $activity->name }}</td>
                         <td>{{ $activity->description }}</td>
-                        <td>{{ \Carbon\Carbon::parse($activity->date)->format('d M Y') }}</td> {{-- Format tanggal --}}
+                        <td>{{ \Carbon\Carbon::parse($activity->date)->format('d M Y') }}</td>
+                        <td>{{ \Carbon\Carbon::parse($activity->enddate)->format('d M Y') }}</td>
                         <td class="text-center">
-                            <a href="/activity/edit/{{ $activity->id }}" class="btn btn-sm btn-outline-success me-2">
+                        <a href="{{ route('activity.edit', $activity->id) }}" class="btn btn-sm btn-outline-success me-2">
                                 <i class="fas fa-pencil-alt"></i>
                             </a>
-                            <a href="/activity/show/{{ $activity->id }}" class="btn btn-sm btn-outline-primary me-2">
+                            <a href="{{ route('activity.show', $activity->id) }}" class="btn btn-sm btn-outline-primary me-2">
                                 <i class="fas fa-eye"></i>
                             </a>
-                            <form action="/activity/{{ $activity->id }}" method="post" class="d-inline">
+                            <form action="{{ route('activity.destroy', $activity->id) }}" method="post" class="d-inline">
                                 @method('delete')
                                 @csrf
                                 <button type="submit" class="btn btn-sm btn-outline-danger"

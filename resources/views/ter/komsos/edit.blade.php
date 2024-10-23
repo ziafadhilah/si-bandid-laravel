@@ -1,8 +1,8 @@
 @extends('layouts.main')
 @section('content')
-    <form action="/ter/komsos/update/{{ $komsos->id }}" method="POST" enctype="multipart/form-data">
+    <form action="{{ route('ter.komsos.update', $komsos->id) }}" method="POST" enctype="multipart/form-data">
         @csrf
-        @method('POST')
+        @method('PUT')
         <div class="card-body mt-4">
             <div class="mb-3 row">
                 <label class="col-lg-2 col-form-label">Sasaran</label>
@@ -21,11 +21,11 @@
                 <div class="col-lg-4">
                     <!-- Input file untuk upload dokumen baru -->
                     <input type="file" class="form-control" name="dokumen" autocomplete="off">
-                    @if ($karyabakti->dokumen)
+                    @if ($komsos->dokumen)
                         <small class="form-text text-muted mt-2">
                             File sebelumnya:
-                            <a href="{{ asset('storage/dokumen/' . $karyabakti->dokumen) }}" target="_blank">
-                                {{ $karyabakti->dokumen }}
+                            <a href="{{ asset('storage/dokumen/' . $komsos->dokumen) }}" target="_blank">
+                                {{ $komsos->dokumen }}
                             </a>
                         </small>
                     @endif
@@ -41,7 +41,7 @@
         document.getElementById('cancel-btn').addEventListener('click', function(event) {
             event.preventDefault(); // Mencegah tombol submit
             if (confirm('Apakah Anda yakin ingin membatalkan? Semua perubahan akan hilang.')) {
-                window.location.href = '/ter/karyabakti'; // Redirect ke halaman index
+                window.location.href = '/ter/koms$komsos'; // Redirect ke halaman index
             }
         });
     </script>

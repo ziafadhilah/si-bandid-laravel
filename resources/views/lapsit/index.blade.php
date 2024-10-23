@@ -31,17 +31,17 @@
                             <td>{{ $data->keterangan }}</td>
                             <td class="text-center">
                                 <!-- Tombol Edit -->
-                                <a href="/lapsit/edit/{{ $data->id }}" class="btn btn-outline-success btn-sm mx-1">
+                                <a href="{{ route('lapsit.edit', $data->id) }}" class="btn btn-outline-success btn-sm mx-1">
                                     <i class="fas fa-pencil-alt"></i>
                                 </a>
                                 
                                 <!-- Tombol Lihat -->
-                                <a href="/lapsit/show/{{ $data->id }}" class="btn btn-outline-primary btn-sm mx-1">
+                                <a href="{{ route('lapsit.show', $data->id) }}" class="btn btn-outline-primary btn-sm mx-1">
                                     <i class="fas fa-eye"></i>
                                 </a>
 
                                 <!-- Tombol Hapus -->
-                                <form action="/lapsit/{{ $data->id }}" method="post" class="d-inline">
+                                <form action="{{ route('lapsit.destroy', $data->id) }}" method="post" class="d-inline">
                                     @method('delete')
                                     @csrf
                                     <button type="submit" class="btn btn-outline-warning btn-sm mx-1"

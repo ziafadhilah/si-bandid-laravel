@@ -46,5 +46,6 @@
             </div>
         </div>
         <button type="submit" class="btn btn-outline-success">Save</button>
+        <a href="{{ url()->previous() }}" class="btn btn-outline-secondary">Cancel</a>
     </form>
 @endsection

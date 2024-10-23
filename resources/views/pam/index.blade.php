@@ -29,7 +29,7 @@
                             <td>{{ $data->no_surat }}</td>
                             <td>
                                 @if ($data->dokumen)
-                                    <a href="{{ asset('storage/dokumen/' . $data->dokumen) }}" target="_blank" class="btn btn-outline-info btn-sm">
+                                    <a href="{{ asset('storage/dokumen/' . $data->dokumen) }}" tarpam="_blank" class="btn btn-outline-info btn-sm">
                                         <i class="fas fa-file-alt"></i> Lihat Dokumen
                                     </a>
                                 @else
@@ -38,17 +38,17 @@
                             </td>
                             <td class="text-center">
                                 <!-- Tombol Edit -->
-                                <a href="/pam/edit/{{ $data->id }}" class="btn btn-outline-success btn-sm mx-1">
+                                <a href="{{ route('pam.edit', $data->id) }}" class="btn btn-outline-success btn-sm mx-1">
                                     <i class="fas fa-pencil-alt"></i>
                                 </a>
 
                                 <!-- Tombol View -->
-                                <a href="/pam/show/{{ $data->id }}" class="btn btn-outline-primary btn-sm mx-1">
+                                <a href="{{ route('pam.show', $data->id) }}" class="btn btn-outline-primary btn-sm mx-1">
                                     <i class="fas fa-eye"></i>
                                 </a>
 
                                 <!-- Tombol Hapus -->
-                                <form action="/pam/{{ $data->id }}" method="post" class="d-inline">
+                                <form action="{{ route('pam.destroy', $data->id) }}" method="post" class="d-inline">
                                     @method('delete')
                                     @csrf
                                     <button type="submit" class="btn btn-outline-warning btn-sm mx-1"

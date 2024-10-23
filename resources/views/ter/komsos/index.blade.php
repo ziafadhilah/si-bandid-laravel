@@ -5,7 +5,7 @@
         <h1 class="fs-1">Halaman Komsos</h1>
         <div class="d-flex justify-content-between mb-3">
             <div></div>
-            <a href="{{ url('ter/komsos/create') }}" class="btn btn-success">
+            <a href="{{ route('ter.komsos.create') }}" class="btn btn-success">
                 <i class="fas fa-plus"></i> Create
             </a>
         </div>
@@ -36,19 +36,16 @@
                             @endif
                         </td>
                         <td class="text-center">
-                            <a href="/ter/komsos/edit/{{ $get->id }}" class="btn btn-outline-success btn-sm mx-1">
-                                 <i class="fas fa-pencil-alt"></i>
-                            </a>
-                            <a href="/ter/komsos/show/{{ $get->id }}" class="btn btn-outline-primary btn-sm mx-1">
-                                <i class="fas fa-eye"></i>
-                            </a>
-                            <form action="{{ route('komsos.destroy', $get->id) }}" method="POST" class="d-inline">
-                                @csrf
-                                @method('DELETE')
-                                <button type="submit" class="btn btn-outline-warning btn-sm mx-1" onclick="return confirm('Anda yakin ingin menghapus?')">
-                                    <i class="fas fa-trash-alt"></i>
-                                </button>
-                            </form>
+                        <a href="{{ route('ter.komsos.edit', $get->id) }}" class="btn btn-outline-success btn-sm mx-1">
+                            <i class="fas fa-pencil-alt"></i>
+                        </a>
+                        <form action="{{ route('ter.komsos.destroy', $get->id) }}" method="POST" class="d-inline">
+                            @csrf
+                            @method('DELETE')
+                            <button type="submit" class="btn btn-outline-warning btn-sm mx-1" onclick="return confirm('Anda yakin ingin menghapus?')">
+                                <i class="fas fa-trash-alt"></i>
+                            </button>
+                        </form>
                         </td>
                     </tr>
                 @endforeach
