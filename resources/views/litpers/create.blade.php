@@ -12,7 +12,7 @@
             <div class="mb-3 row">
                 <label class="col-lg-2 col-form-label">PKT/NRP/JAB</label>
                 <div class="col-lg-4">
-                    <input type="text" class="form-control" name="pkt" placeholder="EX: Serda/1234567890/Ba Yon Arh 7/ABC"
+                    <input type="text" class="form-control" name="pkt" placeholder="EX: Serda/1234567890/Ba Yon Arh 7 ABC"
                         autocomplete="off">
                 </div>
             </div>

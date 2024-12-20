@@ -3,7 +3,7 @@
 @section('content')
     <div class="container mt-5">
         <div class="d-flex justify-content-between align-items-center mb-4">
-            <h1 class="fs-1">Laporan PAM Tubuh Per SMT</h1>
+            <h1 class="fs-1">Laporan PAM Administrasi Per SMT</h1>
             <a href="{{ url('smt/create') }}" class="btn btn-success">
                 <i class="fas fa-plus"></i> Tambah Laporan
             </a>

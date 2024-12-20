@@ -46,7 +46,7 @@
                 <div class="collapse navbar-collapse" id="navbarNav">
                     <ul class="navbar-nav me-auto mb-2 mb-lg-0">
                         <li class="nav-item">
-                            <a class="nav-link disabled" href="{{ url('#') }}">DAFTAR KEGIATAN</a>
+                            <a class="nav-link" href="{{ url('/activity') }}">AKTIVITAS</a>
                         </li>
                         <li class="nav-item">
                             <a class="nav-link disabled" href="{{ url('#') }}">PAM</a>
@@ -89,7 +89,7 @@
                             </p>
                             <button class="btn btn-outline-primary"
                                 onclick="saveTheDate('{{ $data->name }}', '{{ $data->date }}', '{{ $data->enddate }}')">
-                                Save The Date
+                                Buat Pengingat
                             </button>
                         </div>
                     </div>
@@ -107,7 +107,7 @@
                 title: title,
                 start: start,
                 end: end,  // Menggunakan tanggal selesai yang benar
-                description: 'Save the date for this event!',
+                description: 'Simpan tanggal di kalender'
             };
 
             const formatDate = (date) => {
@@ -115,11 +115,48 @@
             };
 
             const url =
-                `https://calendar.google.com/calendar/r/eventedit?text=${encodeURIComponent(event.title)}&dates=${formatDate(start)}/${formatDate(end)}&details=${encodeURIComponent(event.description)};`;
+                `https://calendar.google.com/calendar/r/eventedit?text=${encodeURIComponent(event.title)}&dates=${formatDate(start)}/${formatDate(end)}&details=${encodeURIComponent(event.description)}`;
 
             window.open(url, '_blank');
         }
     </script>
+
+    <!-- <script>
+            // Fungsi untuk membuat elemen disabled menghindar dari kursor
+        function makeDisabledLinksAvoidCursor() {
+            const disabledLinks = document.querySelectorAll('.nav-link.disabled');
+
+            disabledLinks.forEach(link => {
+                link.addEventListener('mousemove', (e) => {
+                    const rect = link.getBoundingClientRect();
+                    const mouseX = e.clientX;
+                    const mouseY = e.clientY;
+                    const centerX = rect.left + rect.width / 2;
+                    const centerY = rect.top + rect.height / 2;
+
+                    // Hitung jarak antara kursor dan tengah elemen
+                    const deltaX = mouseX - centerX;
+                    const deltaY = mouseY - centerY;
+
+                    // Tentukan jarak pergeseran
+                    const moveX = deltaX > 0 ? 50 : -50;
+                    const moveY = deltaY > 0 ? 30 : -30;
+
+                    // Geser elemen dari posisi semula
+                    link.style.transform = `translate(${moveX}px, ${moveY}px)`;
+                });
+
+                // Kembalikan posisi elemen ketika kursor keluar dari elemen
+                link.addEventListener('mouseleave', () => {
+                    link.style.transform = 'translate(0, 0)';
+                });
+            });
+        }
+
+        // Panggil fungsi ini setelah halaman dimuat
+        document.addEventListener('DOMContentLoaded', makeDisabledLinksAvoidCursor);
+
+    </script> -->
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
         integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous">

@@ -13,7 +13,7 @@
             <div class="mb-3 row">
                 <label class="col-lg-2 col-form-label">Nomor Surat</label>
                 <div class="col-lg-4">
-                    <input type="text" class="form-control" name="no_surat" placeholder="EX: Lomba 17 Agustus"
+                    <input type="text" class="form-control" name="no_surat" placeholder="EX: R/1234/X/2024"
                         autocomplete="off" value="{{ $suratkeluar->no_surat }}">
                 </div>
             </div>

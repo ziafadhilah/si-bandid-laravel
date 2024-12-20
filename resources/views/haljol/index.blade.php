@@ -21,13 +21,13 @@
                     </tr>
                 </thead>
                 <tbody>
-                    @foreach ($getAll as $get)
+                    @foreach ($getAll as $data)
                         <tr>
                             <td>{{ $loop->iteration }}</td>
-                            <td>{{ $get->name }}</td>
+                            <td>{{ $data->name }}</td>
                             <td>
-                                @if ($get->dokumen)
-                                    <a href="{{ asset('storage/dokumen/' . $get->dokumen) }}" target="_blank" class="btn btn-outline-info btn-sm">
+                                @if ($data->dokumen)
+                                    <a href="{{ asset('storage/dokumen/' . $data->dokumen) }}" target="_blank" class="btn btn-outline-info btn-sm">
                                         <i class="fas fa-file-alt"></i> Lihat Dokumen
                                     </a>
                                 @else
@@ -36,24 +36,24 @@
                             </td>
                             <td class="text-center">
                                 <!-- Edit Button -->
-                                <a href="/haljol/edit/{{ $get->id }}" class="btn btn-outline-success btn-sm">
+                                <a href="{{ route('haljol.edit', $data->id) }}" class="btn btn-outline-success btn-sm">
                                     <i class="fas fa-pencil-alt"></i>
                                 </a>
 
                                 <!-- View Button -->
-                                <a href="/haljol/show/{{ $get->id }}" class="btn btn-outline-primary btn-sm">
+                                <a href="{{ route('haljol.show', $data->id) }}" class="btn btn-outline-primary btn-sm">
                                     <i class="fas fa-eye"></i>
                                 </a>
 
                                 <!-- Download Button -->
-                                @if ($get->dokumen)
-                                    <a href="{{ asset('storage/dokumen/' . $get->dokumen) }}" class="btn btn-outline-danger btn-sm" download>
+                                @if ($data->dokumen)
+                                    <a href="{{ asset('storage/dokumen/' . $data->dokumen) }}" class="btn btn-outline-danger btn-sm" download>
                                         <i class="fas fa-file-download"></i>
                                     </a>
                                 @endif
 
                                 <!-- Delete Button -->
-                                <form action="/haljol/{{ $get->id }}" method="post" class="d-inline">
+                                <form action="{{ route('haljol.destroy', $data->id) }}" method="post" class="d-inline">
                                     @method('delete')
                                     @csrf
                                     <button type="submit" class="btn btn-outline-warning btn-sm"

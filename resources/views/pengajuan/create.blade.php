@@ -12,7 +12,7 @@
             <div class="mb-3 row">
                 <label class="col-lg-2 col-form-label">Tujuan</label>
                 <div class="col-lg-4">
-                    <input type="text" class="form-control" name="tujuan" placeholder="EX: Lomba 17 Agustus"
+                    <input type="text" class="form-control" name="tujuan" placeholder="EX: R/1234/X/2024"
                         autocomplete="off">
                 </div>
             </div>
